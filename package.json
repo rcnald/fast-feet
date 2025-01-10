@@ -1,0 +1,18 @@
+{
+  "name": "fast-feet",
+  "version": "1.0.0",
+  "description": "- A aplicação deve ter dois tipos de usuário, entregador e/ou admin\r - Deve ser possível realizar login com CPF e Senha\r - Deve ser possível realizar o CRUD dos entregadores\r - Deve ser possível realizar o CRUD das encomendas\r - Deve ser possível realizar o CRUD dos destinatários\r - Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)\r - Deve ser possível retirar uma encomenda\r - Deve ser possível marcar uma encomenda como entregue\r - Deve ser possível marcar uma encomenda como devolvida\r - Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador\r - Deve ser possível alterar a senha de um usuário\r - Deve ser possível listar as entregas de um usuário\r - Deve ser possível notificar o destinatário a cada alteração no status da encomenda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^22.10.5",
+    "eslint": "^8.57.1",
+    "typescript": "^5.7.2"
+  }
+}
