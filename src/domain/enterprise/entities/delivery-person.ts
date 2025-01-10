@@ -1,24 +1,26 @@
+import { Entity } from "@/domain/core/entity"
+import { UniqueId } from "./value-objects/unique-id"
+
 export interface DeliveryPersonProps {
-  id: string
   name: string
   cpf: string
   password: string
 }
 
-export class DeliveryPerson {
-  private _id: string
-  private name: string
-  private cpf: string
-  private password: string
-
-  get id() {
-    return this._id
+export class DeliveryPerson extends Entity<DeliveryPersonProps> {
+  get name() {
+    return this.props.name
   }
 
-  protected constructor(props: DeliveryPersonProps) {
-    this._id = props.id
-    this.cpf = props.cpf
-    this.name = props.name
-    this.password = props.password
+  get cpf() {
+    return this.props.cpf
+  }
+
+  get password() {
+    return this.props.password
+  }
+
+  static create(props: DeliveryPersonProps, id?: UniqueId) {
+    return new DeliveryPerson(props, id)
   }
 }

@@ -1,24 +1,26 @@
+import { Entity } from "@/domain/core/entity"
+import { UniqueId } from "./value-objects/unique-id"
+
 export interface AdminProps {
-  id: string
   name: string
   cpf: string
   password: string
 }
 
-export class Admin {
-  private _id: string
-  private cpf: string
-  private name: string
-  private password: string
-
-  get id() {
-    return this._id
+export class Admin extends Entity<AdminProps> {
+  get name() {
+    return this.props.name
   }
 
-  protected constructor(props: AdminProps) {
-    this._id = props.id
-    this.cpf = props.cpf
-    this.name = props.name
-    this.password = props.password
+  get cpf() {
+    return this.props.cpf
+  }
+
+  get password() {
+    return this.props.password
+  }
+
+  static create(props: AdminProps, id?: UniqueId) {
+    return new Admin(props, id)
   }
 }
