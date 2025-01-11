@@ -1,4 +1,4 @@
-import { Entity } from "@/domain/core/entity"
+import { Entity } from "@/core/entity"
 import { UniqueId } from "./value-objects/unique-id"
 
 export interface AdminProps {

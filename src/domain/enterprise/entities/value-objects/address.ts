@@ -8,12 +8,12 @@ interface AddressProps {
 }
 
 export class Address {
-  private street: string
-  private number: string
-  private city: string
-  private state: string
-  private neighborhood: string
-  private zipCode: string
+  public street: string
+  public number: string
+  public city: string
+  public state: string
+  public neighborhood: string
+  public zipCode: string
 
   constructor(props: AddressProps) {
     this.street = props.street
@@ -22,10 +22,6 @@ export class Address {
     this.neighborhood = props.neighborhood
     this.number = props.number
     this.zipCode = props.zipCode
-  }
-
-  static create(value: AddressProps) {
-    return new Address(value)
   }
 
   toString() {
