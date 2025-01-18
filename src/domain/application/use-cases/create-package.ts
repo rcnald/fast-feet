@@ -2,8 +2,8 @@ import { Package } from "@/domain/enterprise/entities/package"
 import { PackageRepository } from "../repositories/package-repository"
 
 export interface CreatePackageUseCaseRequest {
-  recipient: string
-  recipientAddress: {
+  recipientId: string
+  deliveryAddress: {
     street: string
     city: string
     state: string
@@ -18,15 +18,15 @@ export interface CreatePackageUseCaseResponse {
 }
 
 export class CreatePackageUseCase {
-  constructor(private packagesRepository: PackageRepository) {}
+  constructor(private packageRepository: PackageRepository) {}
 
   async execute({
-    recipient,
-    recipientAddress,
+    recipientId,
+    deliveryAddress,
   }: CreatePackageUseCaseRequest): Promise<CreatePackageUseCaseResponse> {
-    const pack = Package.create({ recipient, recipientAddress })
+    const pack = Package.create({ recipientId, deliveryAddress })
 
-    await this.packagesRepository.create(pack)
+    await this.packageRepository.create(pack)
 
     return {
       pack,

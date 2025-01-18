@@ -12,8 +12,8 @@ type PackageStatus =
 
 export interface PackageProps {
   status: PackageStatus
-  recipient: string
-  recipientAddress: Address
+  recipientId: string
+  deliveryAddress: Address
 
   createdAt: Date
   pickedUpAt?: Date | null
@@ -29,20 +29,20 @@ export class Package extends Entity<PackageProps> {
     this.props.status = status
   }
 
-  get recipient() {
-    return this.props.recipient
+  get recipientId() {
+    return this.props.recipientId
   }
 
-  set recipient(recipient: string) {
-    this.props.recipient = recipient
+  set recipientId(recipientId: string) {
+    this.props.recipientId = recipientId
   }
 
-  get recipientAddress() {
-    return this.props.recipientAddress
+  get deliveryAddress() {
+    return this.props.deliveryAddress
   }
 
-  set recipientAddress(address: Address) {
-    this.props.recipientAddress = address
+  set deliveryAddress(address: Address) {
+    this.props.deliveryAddress = address
   }
 
   get createdAt() {
@@ -76,7 +76,7 @@ export class Package extends Entity<PackageProps> {
     return new Package(
       {
         ...props,
-        recipientAddress: new Address(props.recipientAddress),
+        deliveryAddress: new Address(props.deliveryAddress),
         createdAt: props.createdAt ?? new Date(),
         status: props.status ?? "uninitialized",
       },
