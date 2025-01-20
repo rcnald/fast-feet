@@ -10,4 +10,8 @@ export class UniqueId {
   toString() {
     return this.value
   }
+
+  equals(uniqueId: UniqueId) {
+    return this.value === uniqueId.toString()
+  }
 }

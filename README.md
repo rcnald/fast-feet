@@ -1,11 +1,11 @@
 ### Regras da aplicação
 
-- [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
+- [X] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
 - [X] Deve ser possível realizar login com CPF e Senha
 - [] Deve ser possível realizar o CRUD dos entregadores
 - [] Deve ser possível realizar o CRUD das encomendas
 - [] Deve ser possível realizar o CRUD dos destinatários
-- [] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
+- [X] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 - [] Deve ser possível retirar uma encomenda
 - [] Deve ser possível marcar uma encomenda como entregue
 - [] Deve ser possível marcar uma encomenda como devolvida
