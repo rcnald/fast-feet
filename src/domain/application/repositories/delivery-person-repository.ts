@@ -1,5 +1,6 @@
 import { DeliveryPerson } from "@/domain/enterprise/entities/delivery-person"
 
 export abstract class DeliveryPersonRepository {
-  abstract create(pack: DeliveryPerson): Promise<void>
+  abstract create(deliveryPerson: DeliveryPerson): Promise<void>
+  abstract findByCPF(cpf: string): Promise<DeliveryPerson | null>
 }

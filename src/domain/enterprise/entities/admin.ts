@@ -8,6 +8,12 @@ export interface AdminProps {
 }
 
 export class Admin extends Entity<AdminProps> {
+  static role = "ADMIN" as const
+
+  get role() {
+    return Admin.role
+  }
+
   get name() {
     return this.props.name
   }

@@ -9,4 +9,14 @@ export class InMemoryDeliveryPersonRepository
   async create(deliveryPerson: DeliveryPerson) {
     this.items.push(deliveryPerson)
   }
+
+  async findByCPF(cpf: string): Promise<DeliveryPerson | null> {
+    const deliveryPerson = this.items.find((deliveryPerson) => {
+      return deliveryPerson.cpf === cpf
+    })
+
+    if (!deliveryPerson) return null
+
+    return deliveryPerson
+  }
 }

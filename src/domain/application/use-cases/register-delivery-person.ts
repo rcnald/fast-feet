@@ -1,5 +1,6 @@
 import { DeliveryPerson } from "@/domain/enterprise/entities/delivery-person"
 import { DeliveryPersonRepository } from "../repositories/delivery-person-repository"
+import { HashGenerator } from "../cryptography/hash-generator"
 
 export interface RegisterDeliveryPersonUseCaseRequest {
   name: string
@@ -12,14 +13,30 @@ export interface RegisterDeliveryPersonUseCaseResponse {
 }
 
 export class RegisterDeliveryPersonUseCase {
-  constructor(private deliveryPersonRepository: DeliveryPersonRepository) {}
+  constructor(
+    private deliveryPersonRepository: DeliveryPersonRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
 
   async execute({
     name,
     cpf,
     password,
   }: RegisterDeliveryPersonUseCaseRequest): Promise<RegisterDeliveryPersonUseCaseResponse> {
-    const deliveryPerson = DeliveryPerson.create({ name, cpf, password })
+    const deliveryPersonExists =
+      await this.deliveryPersonRepository.findByCPF(cpf)
+
+    if (deliveryPersonExists) {
+      throw new Error()
+    }
+
+    const hashedPassword = await this.hashGenerator.hash(password)
+
+    const deliveryPerson = DeliveryPerson.create({
+      name,
+      cpf,
+      password: hashedPassword,
+    })
 
     await this.deliveryPersonRepository.create(deliveryPerson)
 

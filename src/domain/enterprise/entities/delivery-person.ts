@@ -8,6 +8,12 @@ export interface DeliveryPersonProps {
 }
 
 export class DeliveryPerson extends Entity<DeliveryPersonProps> {
+  static role = "DELIVERY_PERSON" as const
+
+  get role() {
+    return DeliveryPerson.role
+  }
+
   get name() {
     return this.props.name
   }
