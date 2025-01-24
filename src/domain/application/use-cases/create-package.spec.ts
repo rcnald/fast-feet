@@ -11,7 +11,7 @@ describe("Create Package", () => {
   })
 
   it("should be able to create a package", async () => {
-    await sut.execute({
+    const { pack } = await sut.execute({
       recipientId: "recipient-1",
       deliveryAddress: {
         city: "Sao Paulo",
@@ -25,7 +25,7 @@ describe("Create Package", () => {
 
     expect(inMemoryPackageRepository.items[0]).toEqual(
       expect.objectContaining({
-        recipientId: "recipient-1",
+        recipientId: pack.recipientId,
         status: "uninitialized",
       }),
     )

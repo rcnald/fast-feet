@@ -1,12 +1,12 @@
 import { Entity } from "@/core/entity"
 import { UniqueId } from "./value-objects/unique-id"
 
-export interface DeliveryPersonPackageProps {
+export interface DeliveryProps {
   deliveryPersonId: UniqueId
   packageId: UniqueId
 }
 
-export class DeliveryPersonPackage extends Entity<DeliveryPersonPackageProps> {
+export class Delivery extends Entity<DeliveryProps> {
   get deliveryPersonId() {
     return this.props.deliveryPersonId
   }
@@ -15,7 +15,7 @@ export class DeliveryPersonPackage extends Entity<DeliveryPersonPackageProps> {
     return this.props.packageId
   }
 
-  static create(props: DeliveryPersonPackageProps, id?: UniqueId) {
-    return new DeliveryPersonPackage(props, id)
+  static create(props: DeliveryProps, id?: UniqueId) {
+    return new Delivery(props, id)
   }
 }

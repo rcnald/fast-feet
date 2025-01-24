@@ -6,7 +6,7 @@
 - [] Deve ser possível realizar o CRUD das encomendas
 - [] Deve ser possível realizar o CRUD dos destinatários
 - [X] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
-- [] Deve ser possível retirar uma encomenda
+- [X] Deve ser possível retirar uma encomenda
 - [] Deve ser possível marcar uma encomenda como entregue
 - [] Deve ser possível marcar uma encomenda como devolvida
 - [] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador(5km)

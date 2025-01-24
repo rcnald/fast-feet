@@ -1,5 +1,6 @@
 import { Package } from "@/domain/enterprise/entities/package"
 import { PackageRepository } from "../repositories/package-repository"
+import { UniqueId } from "@/domain/enterprise/entities/value-objects/unique-id"
 
 export interface CreatePackageUseCaseRequest {
   recipientId: string
@@ -24,7 +25,10 @@ export class CreatePackageUseCase {
     recipientId,
     deliveryAddress,
   }: CreatePackageUseCaseRequest): Promise<CreatePackageUseCaseResponse> {
-    const pack = Package.create({ recipientId, deliveryAddress })
+    const pack = Package.create({
+      recipientId: new UniqueId(recipientId),
+      deliveryAddress,
+    })
 
     await this.packageRepository.create(pack)
 

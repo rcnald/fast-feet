@@ -12,7 +12,7 @@ type PackageStatus =
 
 export interface PackageProps {
   status: PackageStatus
-  recipientId: string
+  recipientId: UniqueId
   deliveryAddress: Address
 
   createdAt: Date
@@ -33,7 +33,7 @@ export class Package extends Entity<PackageProps> {
     return this.props.recipientId
   }
 
-  set recipientId(recipientId: string) {
+  set recipientId(recipientId: UniqueId) {
     this.props.recipientId = recipientId
   }
 
