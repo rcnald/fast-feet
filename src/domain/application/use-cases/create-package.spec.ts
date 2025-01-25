@@ -26,7 +26,6 @@ describe("Create Package", () => {
     expect(inMemoryPackageRepository.items[0]).toEqual(
       expect.objectContaining({
         recipientId: pack.recipientId,
-        status: "uninitialized",
       }),
     )
   })

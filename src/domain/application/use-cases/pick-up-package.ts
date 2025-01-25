@@ -1,51 +1,38 @@
-import { Package } from "@/domain/enterprise/entities/package"
-import { PackageRepository } from "../repositories/package-repository"
 import { Delivery } from "@/domain/enterprise/entities/delivery"
 import { UniqueId } from "@/domain/enterprise/entities/value-objects/unique-id"
 import { DeliveryRepository } from "../repositories/delivery-repository"
 
 export interface PickUpPackageUseCaseRequest {
-  packageId: string
+  deliveryId: string
   deliveryPersonId: string
 }
 
 export interface PickUpPackageUseCaseResponse {
-  pack: Package
+  delivery: Delivery
 }
 
 export class PickUpPackageUseCase {
-  constructor(
-    private packageRepository: PackageRepository,
-    private deliveryRepository: DeliveryRepository,
-  ) {}
+  constructor(private deliveryRepository: DeliveryRepository) {}
 
   async execute({
-    packageId,
+    deliveryId,
     deliveryPersonId,
   }: PickUpPackageUseCaseRequest): Promise<PickUpPackageUseCaseResponse> {
-    const pack = await this.packageRepository.findById(packageId)
+    const delivery = await this.deliveryRepository.findById(deliveryId)
 
-    if (!pack) {
+    if (!delivery) {
       throw new Error()
     }
 
-    if (pack.status !== "awaiting_pickup") {
+    if (delivery.deliveryPersonId) {
       throw new Error()
     }
 
-    const delivery = Delivery.create({
-      deliveryPersonId: new UniqueId(deliveryPersonId),
-      packageId: new UniqueId(packageId),
-    })
-
-    await this.deliveryRepository.create(delivery)
-
-    pack.status = "picked_up"
-
-    await this.packageRepository.save(pack)
+    delivery.deliveryPersonId = new UniqueId(deliveryPersonId)
+    delivery.pickedUpAt = new Date()
 
     return {
-      pack,
+      delivery,
     }
   }
 }
