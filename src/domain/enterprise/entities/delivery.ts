@@ -5,6 +5,7 @@ import { Optional } from "@/core/types/optional"
 export interface DeliveryProps {
   deliveryPersonId?: UniqueId
   packageId: UniqueId
+  attachmentId?: UniqueId
 
   createdAt: Date
   pickedUpAt?: Date | null
@@ -23,6 +24,14 @@ export class Delivery extends Entity<DeliveryProps> {
 
   get packageId() {
     return this.props.packageId
+  }
+
+  get attachmentId() {
+    return this.props.attachmentId
+  }
+
+  set attachmentId(attachmentId: UniqueId | undefined) {
+    this.props.attachmentId = attachmentId
   }
 
   get createdAt() {
@@ -55,6 +64,14 @@ export class Delivery extends Entity<DeliveryProps> {
 
   set returnedAt(date: Date | null | undefined) {
     this.props.returnedAt = date
+  }
+
+  get status() {
+    if (this.props.returnedAt) return "returned"
+    if (this.props.deliveredAt) return "delivered"
+    if (this.props.pickedUpAt) return "picked_up"
+
+    return "awaiting_pickup"
   }
 
   static create(props: Optional<DeliveryProps, "createdAt">, id?: UniqueId) {
