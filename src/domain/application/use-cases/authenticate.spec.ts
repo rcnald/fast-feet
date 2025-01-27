@@ -17,7 +17,7 @@ describe("Authenticate", () => {
     sut = new AuthenticateUserUseCase(inMemoryUserRepository, encrypter, hasher)
   })
 
-  it("should be able to create a package", async () => {
+  it("should be able to authenticate", async () => {
     inMemoryUserRepository.items.push(
       DeliveryPerson.create({
         name: "John Doe",

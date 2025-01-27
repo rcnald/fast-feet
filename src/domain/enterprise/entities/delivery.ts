@@ -8,9 +8,6 @@ export interface DeliveryProps {
   attachmentId?: UniqueId
 
   createdAt: Date
-  pickedUpAt?: Date | null
-  deliveredAt?: Date | null
-  returnedAt?: Date | null
 }
 
 export class Delivery extends Entity<DeliveryProps> {
@@ -40,38 +37,6 @@ export class Delivery extends Entity<DeliveryProps> {
 
   set createdAt(date: Date) {
     this.props.createdAt = date
-  }
-
-  get pickedUpAt() {
-    return this.props.pickedUpAt
-  }
-
-  set pickedUpAt(date: Date | null | undefined) {
-    this.props.pickedUpAt = date
-  }
-
-  get deliveredAt() {
-    return this.props.deliveredAt
-  }
-
-  set deliveredAt(date: Date | null | undefined) {
-    this.props.deliveredAt = date
-  }
-
-  get returnedAt() {
-    return this.props.returnedAt
-  }
-
-  set returnedAt(date: Date | null | undefined) {
-    this.props.returnedAt = date
-  }
-
-  get status() {
-    if (this.props.returnedAt) return "returned"
-    if (this.props.deliveredAt) return "delivered"
-    if (this.props.pickedUpAt) return "picked_up"
-
-    return "awaiting_pickup"
   }
 
   static create(props: Optional<DeliveryProps, "createdAt">, id?: UniqueId) {

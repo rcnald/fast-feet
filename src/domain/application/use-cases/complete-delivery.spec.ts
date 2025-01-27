@@ -1,25 +1,25 @@
-import { PickUpPackageUseCase } from "./pick-up-package"
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
 import { UniqueId } from "@/domain/enterprise/entities/value-objects/unique-id"
 import { Delivery } from "@/domain/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
+import { CompleteDeliveryUseCase } from "./complete-delivery"
 import { Package } from "@/domain/enterprise/entities/package"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
-let sut: PickUpPackageUseCase
+let sut: CompleteDeliveryUseCase
 
-describe("Pick Up Package", () => {
+describe("Complete Delivery", () => {
   beforeEach(() => {
     inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
     inMemoryPackageRepository = new InMemoryPackageRepository()
-    sut = new PickUpPackageUseCase(
+    sut = new CompleteDeliveryUseCase(
       inMemoryDeliveryRepository,
       inMemoryPackageRepository,
     )
   })
 
-  it("should be able to pick up a package", async () => {
+  it("should be able to complete a delivery", async () => {
     const pack = Package.create({
       recipientId: new UniqueId("recipient-id-1"),
       deliveryAddress: {
@@ -32,16 +32,23 @@ describe("Pick Up Package", () => {
       },
     })
 
-    const deliveryToPickup = Delivery.create({
+    const deliveryToMarkAsDelivered = Delivery.create({
       packageId: pack.id,
     })
 
+    deliveryToMarkAsDelivered.deliveryPersonId = new UniqueId(
+      "delivery-person-id-1",
+    )
+
+    pack.pickedUpAt = new Date()
+
     inMemoryPackageRepository.create(pack)
-    inMemoryDeliveryRepository.create(deliveryToPickup)
+    inMemoryDeliveryRepository.create(deliveryToMarkAsDelivered)
 
     const { delivery } = await sut.execute({
-      deliveryId: deliveryToPickup.id.toString(),
+      deliveryId: deliveryToMarkAsDelivered.id.toString(),
       deliveryPersonId: "delivery-person-id-1",
+      attachmentId: "attachment-id-1",
     })
 
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
@@ -53,6 +60,7 @@ describe("Pick Up Package", () => {
     expect(inMemoryPackageRepository.items[0]).toEqual(
       expect.objectContaining({
         pickedUpAt: expect.any(Date),
+        deliveredAt: expect.any(Date),
       }),
     )
   })
