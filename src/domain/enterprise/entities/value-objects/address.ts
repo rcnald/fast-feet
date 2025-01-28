@@ -24,7 +24,7 @@ export class Address {
     this.zipCode = props.zipCode
   }
 
-  toString() {
+  toValue(): string {
     return `${this.street}, ${this.neighborhood}, ${this.number} - ${this.city}, ${this.state} (${this.zipCode})`
   }
 }

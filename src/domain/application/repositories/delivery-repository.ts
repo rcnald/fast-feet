@@ -5,4 +5,11 @@ export abstract class DeliveryRepository {
   abstract findByPackageId(packageId: string): Promise<Delivery | null>
   abstract findById(id: string): Promise<Delivery | null>
   abstract save(delivery: Delivery): Promise<void>
+  abstract findManyNearbyByDeliveryPersonId(
+    deliveryPersonCoordinate: {
+      latitude: number
+      longitude: number
+    },
+    deliveryPersonId: string,
+  ): Promise<Delivery[]>
 }

@@ -74,7 +74,6 @@ export class Package extends Entity<PackageProps> {
     return new Package(
       {
         ...props,
-        deliveryAddress: new Address(props.deliveryAddress),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
