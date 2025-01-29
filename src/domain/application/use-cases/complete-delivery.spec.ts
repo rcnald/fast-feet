@@ -4,15 +4,23 @@ import { Delivery } from "@/domain/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
 import { CompleteDeliveryUseCase } from "./complete-delivery"
 import { Package } from "@/domain/enterprise/entities/package"
+import { Geocoder } from "../geolocation/geocoder"
+import { FakeGeocoder } from "../../../../test/geolocation/fake-geocoder"
+import { Address } from "@/domain/enterprise/entities/value-objects/address"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
+let fakeGeocoder: Geocoder
 let sut: CompleteDeliveryUseCase
 
 describe("Complete Delivery", () => {
   beforeEach(() => {
-    inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
     inMemoryPackageRepository = new InMemoryPackageRepository()
+    fakeGeocoder = new FakeGeocoder()
+    inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
+      inMemoryPackageRepository,
+      fakeGeocoder,
+    )
     sut = new CompleteDeliveryUseCase(
       inMemoryDeliveryRepository,
       inMemoryPackageRepository,
@@ -22,14 +30,14 @@ describe("Complete Delivery", () => {
   it("should be able to complete a delivery", async () => {
     const pack = Package.create({
       recipientId: new UniqueId("recipient-id-1"),
-      deliveryAddress: {
+      deliveryAddress: new Address({
         city: "Sao Paulo",
         state: "SP",
         street: "Rua da avenida",
         neighborhood: "Bairro da esquina",
         number: "13A",
         zipCode: "73674289",
-      },
+      }),
     })
 
     const deliveryToMarkAsDelivered = Delivery.create({

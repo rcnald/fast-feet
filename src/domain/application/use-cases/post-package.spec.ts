@@ -1,12 +1,22 @@
+import { FakeGeocoder } from "../../../../test/geolocation/fake-geocoder"
+import { InMemoryPackageRepository } from "../../../../test/in-memory-repositories/in-memory-package-repository"
+import { Geocoder } from "../geolocation/geocoder"
 import { PostPackageUseCase } from "./post-package"
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
+let inMemoryPackageRepository: InMemoryPackageRepository
+let fakeGeocoder: Geocoder
 let sut: PostPackageUseCase
 
 describe("Post Package", () => {
   beforeEach(() => {
-    inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
+    fakeGeocoder = new FakeGeocoder()
+    inMemoryPackageRepository = new InMemoryPackageRepository()
+    inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
+      inMemoryPackageRepository,
+      fakeGeocoder,
+    )
     sut = new PostPackageUseCase(inMemoryDeliveryRepository)
   })
 
