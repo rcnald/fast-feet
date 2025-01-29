@@ -52,33 +52,32 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
     },
     deliveryPersonId: string,
   ) {
-    const _deliveryWithCoordinate = await Promise.all(
-      this.items.map(async (delivery) => {
-        if (delivery.deliveryPersonId?.toString() === deliveryPersonId) {
+    const deliveryWithCoordinate = await Promise.all(
+      this.items
+        .filter((delivery) => {
+          return delivery.deliveryPersonId?.toString() === deliveryPersonId
+        })
+        .map(async (delivery) => {
           const pack = await this.packageRepository.findById(
             delivery.packageId.toString(),
           )
 
-          if (pack) {
-            const coordinate = await this.geocoder.geocode(
-              new Address(pack.deliveryAddress).toValue(),
-            )
+          if (!pack) return
 
-            return {
-              deliveryId: delivery.id.toString(),
-              coordinate,
-            }
+          const coordinate = await this.geocoder.geocode(
+            new Address(pack.deliveryAddress).toValue(),
+          )
+          return {
+            deliveryId: delivery.id.toString(),
+            coordinate,
           }
-        }
-      }),
+        }),
     )
 
-    const deliveryWithCoordinate = _deliveryWithCoordinate.filter(
-      (delivery) => !!delivery,
-    )
-
-    const nearbyDeliveriesId = deliveryWithCoordinate
+    const nearbyDeliveriesIds = deliveryWithCoordinate
       .filter((delivery) => {
+        if (!delivery) return false
+
         const distance = getDistanceBetweenCoordinates(
           {
             latitude: deliveryPersonCoordinate.latitude,
@@ -92,10 +91,11 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
 
         return distance < 5
       })
+      .filter((delivery) => !!delivery)
       .map((delivery) => delivery.deliveryId)
 
     const nearbyDeliveries = await Promise.all(
-      nearbyDeliveriesId.map(async (deliveryId) => {
+      nearbyDeliveriesIds.map((deliveryId) => {
         return this.findById(deliveryId)
       }),
     )
