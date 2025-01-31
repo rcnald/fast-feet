@@ -102,4 +102,17 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
 
     return nearbyDeliveries.filter((delivery) => !!delivery)
   }
+
+  async findManyByRecipientId(recipientId: string): Promise<Delivery[]> {
+    const packages =
+      await this.packageRepository.findManyByRecipientId(recipientId)
+
+    const Deliveries = await Promise.all(
+      packages.map(async (pack) => {
+        return await this.findByPackageId(pack.id.toString())
+      }),
+    )
+
+    return Deliveries.filter((delivery) => !!delivery)
+  }
 }

@@ -25,4 +25,12 @@ export class InMemoryPackageRepository implements PackageRepository {
 
     this.items[packIndex] = packToSave
   }
+
+  async findManyByRecipientId(recipientId: string): Promise<Package[]> {
+    const pack = this.items.filter((pack) => {
+      return pack.recipientId.toString() === recipientId
+    })
+
+    return pack
+  }
 }

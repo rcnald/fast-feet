@@ -12,4 +12,6 @@ export abstract class DeliveryRepository {
     },
     deliveryPersonId: string,
   ): Promise<Delivery[]>
+
+  abstract findManyByRecipientId(recipientId: string): Promise<Delivery[]>
 }
