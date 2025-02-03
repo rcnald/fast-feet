@@ -1,5 +1,5 @@
-import { DeliveryPersonRepository } from "@/domain/application/repositories/delivery-person-repository"
-import { DeliveryPerson } from "@/domain/enterprise/entities/delivery-person"
+import { DeliveryPersonRepository } from "@/domain/delivery/application/repositories/delivery-person-repository"
+import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 
 export class InMemoryDeliveryPersonRepository
   implements DeliveryPersonRepository

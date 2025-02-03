@@ -1,9 +1,9 @@
-import { Geocoder } from "@/domain/application/geolocation/geocoder"
-import { DeliveryRepository } from "@/domain/application/repositories/delivery-repository"
-import { Delivery } from "@/domain/enterprise/entities/delivery"
+import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "./in-memory-package-repository"
 import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates"
-import { Address } from "@/domain/enterprise/entities/value-objects/address"
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
+import { DeliveryRepository } from "@/domain/delivery/application/repositories/delivery-repository"
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   public items: Delivery[] = []

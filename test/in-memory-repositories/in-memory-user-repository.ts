@@ -1,9 +1,9 @@
 import {
   User,
   UserRepository,
-} from "@/domain/application/repositories/user-repository"
-import { Admin } from "@/domain/enterprise/entities/admin"
-import { DeliveryPerson } from "@/domain/enterprise/entities/delivery-person"
+} from "@/domain/delivery/application/repositories/user-repository"
+import { Admin } from "@/domain/delivery/enterprise/entities/admin"
+import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 
 export class InMemoryUserRepository implements UserRepository {
   public items: User[] = []

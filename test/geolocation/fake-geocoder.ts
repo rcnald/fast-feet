@@ -1,4 +1,4 @@
-import { Geocoder } from "@/domain/application/geolocation/geocoder"
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
 
 export class FakeGeocoder implements Geocoder {
   async geocode(
