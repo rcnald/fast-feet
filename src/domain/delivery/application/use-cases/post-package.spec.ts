@@ -1,8 +1,10 @@
-import { FakeGeocoder } from "test/geolocation/fake-geocoder"
-import { InMemoryPackageRepository } from "test/in-memory-repositories/in-memory-package-repository"
-import { Geocoder } from "../geolocation/geocoder"
-import { PostPackageUseCase } from "./post-package"
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
+import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
+import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
+import { Geocoder } from "../geolocation/geocoder"
+import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { PostPackageUseCase } from "./post-package"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -12,7 +14,6 @@ let sut: PostPackageUseCase
 describe("Post Package", () => {
   beforeEach(() => {
     fakeGeocoder = new FakeGeocoder()
-    inMemoryPackageRepository = new InMemoryPackageRepository()
     inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
       inMemoryPackageRepository,
       fakeGeocoder,
@@ -21,26 +22,24 @@ describe("Post Package", () => {
   })
 
   it("should be able to post a package", async () => {
-    const { delivery } = await sut.execute({
-      packageId: "package-id-1",
+    const delivery = Delivery.create(
+      {
+        packageId: new UniqueId("packed-id-1"),
+      },
+      new UniqueId("delivery-id-1"),
+    )
+
+    await inMemoryDeliveryRepository.create(delivery)
+
+    await sut.execute({
+      deliveryId: "delivery-id-1",
     })
 
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
-        packageId: delivery.packageId,
+        packageId: new UniqueId("packed-id-1"),
+        packagePostedAt: expect.any(Date),
       }),
     )
-  })
-
-  it("should not be able to post a package that was previous posted", async () => {
-    await sut.execute({
-      packageId: "package-id-1",
-    })
-
-    await expect(() =>
-      sut.execute({
-        packageId: "package-id-1",
-      }),
-    ).rejects.toBeInstanceOf(Error)
   })
 })

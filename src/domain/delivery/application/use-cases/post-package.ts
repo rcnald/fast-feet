@@ -1,9 +1,8 @@
-import { DeliveryRepository } from "../repositories/delivery-repository"
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
-import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
+import { DeliveryRepository } from "../repositories/delivery-repository"
 
 export interface PostPackageUseCaseRequest {
-  packageId: string
+  deliveryId: string
 }
 
 export interface PostPackageUseCaseResponse {
@@ -14,20 +13,17 @@ export class PostPackageUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 
   async execute({
-    packageId,
+    deliveryId,
   }: PostPackageUseCaseRequest): Promise<PostPackageUseCaseResponse> {
-    const deliveryExists =
-      await this.deliveryRepository.findByPackageId(packageId)
+    const delivery = await this.deliveryRepository.findById(deliveryId)
 
-    if (deliveryExists) {
+    if (!delivery) {
       throw new Error()
     }
 
-    const delivery = Delivery.create({
-      packageId: new UniqueId(packageId),
-    })
+    delivery.packagePostedAt = new Date()
 
-    await this.deliveryRepository.create(delivery)
+    await this.deliveryRepository.save(delivery)
 
     return {
       delivery,

@@ -1,6 +1,5 @@
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { DeliveryRepository } from "../repositories/delivery-repository"
-import { PackageRepository } from "../repositories/package-repository"
 
 export interface ReturnPackageUseCaseRequest {
   deliveryId: string
@@ -11,10 +10,7 @@ export interface ReturnPackageUseCaseResponse {
 }
 
 export class ReturnPackageUseCase {
-  constructor(
-    private deliveryRepository: DeliveryRepository,
-    private packageRepository: PackageRepository,
-  ) {}
+  constructor(private deliveryRepository: DeliveryRepository) {}
 
   async execute({
     deliveryId,
@@ -25,21 +21,13 @@ export class ReturnPackageUseCase {
       throw new Error()
     }
 
-    const pack = await this.packageRepository.findById(
-      delivery.packageId.toString(),
-    )
-
-    if (!pack) {
+    if (delivery.status !== "delivered") {
       throw new Error()
     }
 
-    if (pack.status !== "delivered") {
-      throw new Error()
-    }
+    delivery.packageReturnedAt = new Date()
 
-    pack.returnedAt = new Date()
-
-    await this.packageRepository.save(pack)
+    await this.deliveryRepository.save(delivery)
 
     return {
       delivery,

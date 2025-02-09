@@ -4,6 +4,7 @@ import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordin
 import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
 import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
 import { DeliveryRepository } from "@/domain/delivery/application/repositories/delivery-repository"
+import { DomainEvents } from "@/core/events/domain-events"
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   public items: Delivery[] = []
@@ -43,6 +44,8 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
     )
 
     this.items[deliveryIndex] = delivery
+
+    DomainEvents.dispatchEventsForAggregate(delivery.id)
   }
 
   async findManyNearbyByDeliveryPersonId(

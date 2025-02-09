@@ -1,7 +1,6 @@
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { DeliveryRepository } from "../repositories/delivery-repository"
-import { PackageRepository } from "../repositories/package-repository"
 
 export interface CompleteDeliveryUseCaseRequest {
   deliveryId: string
@@ -14,10 +13,7 @@ export interface CompleteDeliveryUseCaseResponse {
 }
 
 export class CompleteDeliveryUseCase {
-  constructor(
-    private deliveryRepository: DeliveryRepository,
-    private packageRepository: PackageRepository,
-  ) {}
+  constructor(private deliveryRepository: DeliveryRepository) {}
 
   async execute({
     deliveryId,
@@ -30,27 +26,18 @@ export class CompleteDeliveryUseCase {
       throw new Error()
     }
 
-    const pack = await this.packageRepository.findById(
-      delivery.packageId.toString(),
-    )
-
-    if (!pack) {
-      throw new Error()
-    }
-
-    if (pack.status !== "picked_up") {
-      throw new Error()
-    }
-
     if (delivery.deliveryPersonId?.toString() !== deliveryPersonId) {
       throw new Error()
     }
 
+    if (delivery.status !== "picked_up") {
+      throw new Error()
+    }
+
     delivery.attachmentId = new UniqueId(attachmentId)
-    pack.deliveredAt = new Date()
+    delivery.packageDeliveredAt = new Date()
 
     await this.deliveryRepository.save(delivery)
-    await this.packageRepository.save(pack)
 
     return {
       delivery,
