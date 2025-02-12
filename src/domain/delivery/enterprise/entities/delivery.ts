@@ -59,6 +59,8 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
   }
 
   set packagePickedUpAt(date: Date | undefined | null) {
+    this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
+
     this.props.packagePickedUpAt = date
   }
 
@@ -67,6 +69,8 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
   }
 
   set packageDeliveredAt(date: Date | undefined | null) {
+    this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
+
     this.props.packageDeliveredAt = date
   }
 
@@ -75,6 +79,8 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
   }
 
   set packageReturnedAt(date: Date | undefined | null) {
+    this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
+
     this.props.packageReturnedAt = date
   }
 
