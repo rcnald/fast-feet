@@ -54,10 +54,10 @@ describe("Fetch Recipient Deliveries", () => {
       inMemoryDeliveryRepository.create(delivery)
     })
 
-    const { deliveries } = await sut.execute({ recipientId: "recipient-id-1" })
+    const [_, result] = await sut.execute({ recipientId: "recipient-id-1" })
 
-    expect(deliveries).toHaveLength(5)
-    expect(deliveries).toEqual(
+    expect(result?.deliveries).toHaveLength(5)
+    expect(result?.deliveries).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           packageId: new UniqueId("package-id-1"),

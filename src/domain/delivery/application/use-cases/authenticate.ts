@@ -1,3 +1,4 @@
+import { bad, nice } from "@/core/error"
 import { Encrypter } from "../cryptography/encrypter"
 import { HashComparer } from "../cryptography/hash-comparer"
 import { UserRepository } from "../repositories/user-repository"
@@ -7,10 +8,6 @@ export interface AuthenticateUserUseCaseRequest {
   password: string
 }
 
-export interface AuthenticateUserUseCaseResponse {
-  token: string
-}
-
 export class AuthenticateUserUseCase {
   constructor(
     private userRepository: UserRepository,
@@ -18,14 +15,11 @@ export class AuthenticateUserUseCase {
     private hashComparer: HashComparer,
   ) {}
 
-  async execute({
-    cpf,
-    password,
-  }: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> {
+  async execute({ cpf, password }: AuthenticateUserUseCaseRequest) {
     const user = await this.userRepository.findByCPF(cpf)
 
     if (!user) {
-      throw Error()
+      return bad({ code: "INVALID_CREDENTIALS" })
     }
 
     const isPasswordValid = await this.hashComparer.compare(
@@ -34,7 +28,7 @@ export class AuthenticateUserUseCase {
     )
 
     if (!isPasswordValid) {
-      throw Error()
+      return bad({ code: "INVALID_CREDENTIALS" })
     }
 
     const token = await this.encrypter.encrypt({
@@ -42,8 +36,6 @@ export class AuthenticateUserUseCase {
       role: user.role,
     })
 
-    return {
-      token,
-    }
+    return nice({ token })
   }
 }

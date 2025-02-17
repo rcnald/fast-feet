@@ -26,11 +26,32 @@ describe("Authenticate", () => {
       }),
     )
 
-    const { token } = await sut.execute({
+    const [error, result] = await sut.execute({
       cpf: "38979332092",
       password: "password",
     })
 
-    expect(token).toEqual(expect.any(String))
+    expect(error).toEqual(undefined)
+    expect(result?.token).toEqual(expect.any(String))
+  })
+
+  it("should not be able to authenticate with invalid password", async () => {
+    inMemoryUserRepository.items.push(
+      DeliveryPerson.create({
+        name: "John Doe",
+        cpf: "38979332092",
+        password: "password-hashed",
+      }),
+    )
+
+    const [error, result] = await sut.execute({
+      cpf: "38979332092",
+      password: "invalid-password",
+    })
+
+    expect(error).toEqual({
+      code: "INVALID_CREDENTIALS",
+    })
+    expect(result?.token).toEqual(undefined)
   })
 })

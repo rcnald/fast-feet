@@ -1,15 +1,12 @@
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { Notification } from "../../enterprise/entities/notification"
 import { NotificationRepository } from "../repositories/notification-repository"
+import { nice } from "@/core/error"
 
 export interface SendNotificationUseCaseRequest {
   recipientId: string
   title: string
   content: string
-}
-
-export type SendNotificationUseCaseResponse = {
-  notification: Notification
 }
 
 export class SendNotificationUseCase {
@@ -19,7 +16,7 @@ export class SendNotificationUseCase {
     recipientId,
     title,
     content,
-  }: SendNotificationUseCaseRequest): Promise<SendNotificationUseCaseResponse> {
+  }: SendNotificationUseCaseRequest) {
     const notification = Notification.create({
       recipientId: new UniqueId(recipientId),
       title,
@@ -28,8 +25,8 @@ export class SendNotificationUseCase {
 
     await this.notificationRepository.create(notification)
 
-    return {
+    return nice({
       notification,
-    }
+    })
   }
 }

@@ -50,14 +50,15 @@ describe("Fetch Nearby Deliveries", () => {
       inMemoryDeliveryRepository.create(delivery)
     })
 
-    const { deliveries } = await sut.execute({
+    const [error, result] = await sut.execute({
       deliveryPersonId: "delivery-person-id-1",
       deliveryPersonLatitude: "-22.906847",
       deliveryPersonLongitude: "-43.172896",
     })
 
-    expect(deliveries).toHaveLength(5)
-    expect(deliveries).toEqual(
+    expect(error).toEqual(undefined)
+    expect(result?.deliveries).toHaveLength(5)
+    expect(result?.deliveries).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           packageId: new UniqueId("package-id-5"),

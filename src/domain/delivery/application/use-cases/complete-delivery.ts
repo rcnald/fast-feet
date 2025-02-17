@@ -1,15 +1,11 @@
-import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { bad, nice } from "@/core/error"
 
 export interface CompleteDeliveryUseCaseRequest {
   deliveryId: string
   deliveryPersonId: string
   attachmentId: string
-}
-
-export interface CompleteDeliveryUseCaseResponse {
-  delivery: Delivery
 }
 
 export class CompleteDeliveryUseCase {
@@ -19,28 +15,28 @@ export class CompleteDeliveryUseCase {
     deliveryId,
     deliveryPersonId,
     attachmentId,
-  }: CompleteDeliveryUseCaseRequest): Promise<CompleteDeliveryUseCaseResponse> {
+  }: CompleteDeliveryUseCaseRequest) {
     const delivery = await this.deliveryRepository.findById(deliveryId)
 
     if (!delivery) {
-      throw new Error()
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     if (delivery.deliveryPersonId?.toString() !== deliveryPersonId) {
-      throw new Error()
+      return bad({ code: "ACCESS_DENIED" })
     }
 
     if (delivery.status !== "picked_up") {
-      throw new Error()
+      return bad({ code: "STATUS_RESTRICTION" })
     }
 
     delivery.attachmentId = new UniqueId(attachmentId)
-    delivery.packageDeliveredAt = new Date()
+    delivery.packageDelivered()
 
     await this.deliveryRepository.save(delivery)
 
-    return {
+    return nice({
       delivery,
-    }
+    })
   }
 }
