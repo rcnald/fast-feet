@@ -21,13 +21,14 @@ describe("Post Package", () => {
   })
 
   it("should be able to post a package", async () => {
-    const { delivery } = await sut.execute({
+    const [error, result] = await sut.execute({
       packageId: "package-id-1",
     })
 
+    expect(error).toEqual(undefined)
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
-        packageId: delivery.packageId,
+        packageId: result?.delivery.packageId,
       }),
     )
   })
@@ -37,10 +38,12 @@ describe("Post Package", () => {
       packageId: "package-id-1",
     })
 
-    await expect(() =>
-      sut.execute({
-        packageId: "package-id-1",
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const [error] = await sut.execute({
+      packageId: "package-id-1",
+    })
+
+    expect(error).toEqual({
+      code: "RESOURCE_ALREADY_EXISTS",
+    })
   })
 })

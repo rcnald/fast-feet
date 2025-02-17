@@ -2,6 +2,7 @@ import { Package } from "@/domain/delivery/enterprise/entities/package"
 import { PackageRepository } from "../repositories/package-repository"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { nice } from "@/core/error"
 
 export interface CreatePackageUseCaseRequest {
   recipientId: string
@@ -15,17 +16,10 @@ export interface CreatePackageUseCaseRequest {
   }
 }
 
-export interface CreatePackageUseCaseResponse {
-  pack: Package
-}
-
 export class CreatePackageUseCase {
   constructor(private packageRepository: PackageRepository) {}
 
-  async execute({
-    recipientId,
-    deliveryAddress,
-  }: CreatePackageUseCaseRequest): Promise<CreatePackageUseCaseResponse> {
+  async execute({ recipientId, deliveryAddress }: CreatePackageUseCaseRequest) {
     const pack = Package.create({
       recipientId: new UniqueId(recipientId),
       deliveryAddress: new Address(deliveryAddress),
@@ -33,8 +27,6 @@ export class CreatePackageUseCase {
 
     await this.packageRepository.create(pack)
 
-    return {
-      pack,
-    }
+    return nice({ pack })
   }
 }

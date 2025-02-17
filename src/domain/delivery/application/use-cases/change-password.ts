@@ -1,3 +1,4 @@
+import { bad, nice } from "@/core/error"
 import { HashComparer } from "../cryptography/hash-comparer"
 import { HashGenerator } from "../cryptography/hash-generator"
 import { UserRepository } from "../repositories/user-repository"
@@ -19,11 +20,11 @@ export class ChangePasswordUseCase {
     currentPassword,
     password,
     userId,
-  }: ChangePasswordUseCaseRequest): Promise<void> {
+  }: ChangePasswordUseCaseRequest) {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      throw Error()
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     const isPasswordValid = await this.hashComparer.compare(
@@ -32,7 +33,7 @@ export class ChangePasswordUseCase {
     )
 
     if (!isPasswordValid) {
-      throw Error()
+      return bad({ code: "PASSWORD_INVALID" })
     }
 
     const newPassword = await this.hasherGenerator.hash(password)
@@ -40,5 +41,7 @@ export class ChangePasswordUseCase {
     user.password = newPassword
 
     await this.userRepository.save(user)
+
+    return nice()
   }
 }

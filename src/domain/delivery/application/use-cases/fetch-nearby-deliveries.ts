@@ -1,14 +1,11 @@
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { nice } from "@/core/error"
 
 export interface FetchNearbyDeliveriesUseCaseRequest {
   deliveryPersonLatitude: string
   deliveryPersonLongitude: string
   deliveryPersonId: string
-}
-
-export interface FetchNearbyDeliveriesUseCaseResponse {
-  deliveries: Delivery[]
 }
 
 export class FetchNearbyDeliveriesUseCase {
@@ -18,7 +15,7 @@ export class FetchNearbyDeliveriesUseCase {
     deliveryPersonLatitude,
     deliveryPersonLongitude,
     deliveryPersonId,
-  }: FetchNearbyDeliveriesUseCaseRequest): Promise<FetchNearbyDeliveriesUseCaseResponse> {
+  }: FetchNearbyDeliveriesUseCaseRequest) {
     const deliveries =
       await this.deliveryRepository.findManyNearbyByDeliveryPersonId(
         {
@@ -28,8 +25,6 @@ export class FetchNearbyDeliveriesUseCase {
         deliveryPersonId,
       )
 
-    return {
-      deliveries,
-    }
+    return nice({ deliveries })
   }
 }

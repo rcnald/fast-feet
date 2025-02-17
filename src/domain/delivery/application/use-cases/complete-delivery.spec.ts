@@ -33,12 +33,13 @@ describe("Complete Delivery", () => {
 
     await inMemoryDeliveryRepository.create(delivery)
 
-    await sut.execute({
+    const [error] = await sut.execute({
       deliveryId: "delivery-id-1",
       deliveryPersonId: "delivery-person-id-1",
       attachmentId: "attachment-id-1",
     })
 
+    expect(error).toEqual(undefined)
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
         deliveryPersonId: new UniqueId("delivery-person-id-1"),
@@ -47,5 +48,62 @@ describe("Complete Delivery", () => {
         packageDeliveredAt: expect.any(Date),
       }),
     )
+  })
+
+  it("should not be able to complete a delivery which not exists", async () => {
+    const [error] = await sut.execute({
+      deliveryId: "delivery-id-1",
+      deliveryPersonId: "wrong-delivery-person-id-1",
+      attachmentId: "attachment-id-1",
+    })
+
+    expect(error).toEqual({
+      code: "RESOURCE_NOT_FOUND",
+    })
+  })
+
+  it("should not be able to complete a delivery which not belongs to delivery person", async () => {
+    const delivery = Delivery.create(
+      {
+        packageId: new UniqueId("package-id-1"),
+        packagePickedUpAt: new Date(),
+        deliveryPersonId: new UniqueId("delivery-person-id-1"),
+      },
+      new UniqueId("delivery-id-1"),
+    )
+
+    await inMemoryDeliveryRepository.create(delivery)
+
+    const [error] = await sut.execute({
+      deliveryId: "delivery-id-1",
+      deliveryPersonId: "wrong-delivery-person-id-1",
+      attachmentId: "attachment-id-1",
+    })
+
+    expect(error).toEqual({
+      code: "ACCESS_DENIED",
+    })
+  })
+
+  it("should not be able to complete a delivery that is not picked up", async () => {
+    const delivery = Delivery.create(
+      {
+        packageId: new UniqueId("package-id-1"),
+        deliveryPersonId: new UniqueId("delivery-person-id-1"),
+      },
+      new UniqueId("delivery-id-1"),
+    )
+
+    await inMemoryDeliveryRepository.create(delivery)
+
+    const [error] = await sut.execute({
+      deliveryId: "delivery-id-1",
+      deliveryPersonId: "delivery-person-id-1",
+      attachmentId: "attachment-id-1",
+    })
+
+    expect(error).toEqual({
+      code: "STATUS_RESTRICTION",
+    })
   })
 })

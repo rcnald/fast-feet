@@ -48,40 +48,40 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
     return this.props.packagePostedAt
   }
 
-  set packagePostedAt(date: Date | undefined | null) {
+  packagePosted() {
     this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
 
-    this.props.packagePostedAt = date
+    this.props.packagePostedAt = new Date()
   }
 
   get packagePickedUpAt() {
     return this.props.packagePickedUpAt
   }
 
-  set packagePickedUpAt(date: Date | undefined | null) {
+  packagePickedUp() {
     this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
 
-    this.props.packagePickedUpAt = date
+    this.props.packagePickedUpAt = new Date()
   }
 
   get packageDeliveredAt() {
     return this.props.packageDeliveredAt
   }
 
-  set packageDeliveredAt(date: Date | undefined | null) {
+  packageDelivered() {
     this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
 
-    this.props.packageDeliveredAt = date
+    this.props.packageDeliveredAt = new Date()
   }
 
   get packageReturnedAt() {
     return this.props.packageReturnedAt
   }
 
-  set packageReturnedAt(date: Date | undefined | null) {
+  packageReturned() {
     this.addDomainEvent(new DeliveryPackageStatusChangedEvent(this))
 
-    this.props.packageReturnedAt = date
+    this.props.packageReturnedAt = new Date()
   }
 
   get status() {

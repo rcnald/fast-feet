@@ -47,4 +47,42 @@ describe("Pick Up Package", () => {
       }),
     )
   })
+
+  it("should not be able to pick up a package which belongs to a delivery person", async () => {
+    const delivery = Delivery.create(
+      {
+        packageId: new UniqueId("package-id-1"),
+        packagePostedAt: new Date(),
+        deliveryPersonId: new UniqueId("delivery-person-id-1"),
+      },
+      new UniqueId("delivery-id-1"),
+    )
+
+    await inMemoryDeliveryRepository.create(delivery)
+
+    const [error] = await sut.execute({
+      deliveryId: "delivery-id-1",
+      deliveryPersonId: "delivery-person-id-2",
+    })
+
+    expect(error).toEqual({ code: "ACCESS_DENIED" })
+  })
+
+  it("should not be able to pick up a package that its not posted", async () => {
+    const delivery = Delivery.create(
+      {
+        packageId: new UniqueId("package-id-1"),
+      },
+      new UniqueId("delivery-id-1"),
+    )
+
+    await inMemoryDeliveryRepository.create(delivery)
+
+    const [error] = await sut.execute({
+      deliveryId: "delivery-id-1",
+      deliveryPersonId: "delivery-person-id-1",
+    })
+
+    expect(error).toEqual({ code: "STATUS_RESTRICTION" })
+  })
 })

@@ -32,7 +32,7 @@ describe("Register Delivery Person", () => {
   })
 
   it("should be able to hash delivery person password", async () => {
-    const { deliveryPerson } = await sut.execute({
+    const [error, result] = await sut.execute({
       name: "John Doe",
       cpf: "38979332092",
       password: "password",
@@ -40,7 +40,8 @@ describe("Register Delivery Person", () => {
 
     const hashedPassword = await hasher.hash("password")
 
-    expect(deliveryPerson.password).toEqual(hashedPassword)
+    expect(error).toEqual(undefined)
+    expect(result?.deliveryPerson.password).toEqual(hashedPassword)
   })
 
   it("should not be able to register a delivery person with an already registered cpf", async () => {
@@ -50,12 +51,12 @@ describe("Register Delivery Person", () => {
       password: "password",
     })
 
-    await expect(() =>
-      sut.execute({
-        name: "John Doe",
-        cpf: "38979332092",
-        password: "password",
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const [error] = await sut.execute({
+      name: "John Doe",
+      cpf: "38979332092",
+      password: "password",
+    })
+
+    expect(error).toEqual({ code: "RESOURCE_ALREADY_EXISTS" })
   })
 })

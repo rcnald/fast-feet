@@ -1,36 +1,31 @@
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { bad, nice } from "@/core/error"
 
 export interface ReturnPackageUseCaseRequest {
   deliveryId: string
 }
 
-export interface ReturnPackageUseCaseResponse {
-  delivery: Delivery
-}
-
 export class ReturnPackageUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 
-  async execute({
-    deliveryId,
-  }: ReturnPackageUseCaseRequest): Promise<ReturnPackageUseCaseResponse> {
+  async execute({ deliveryId }: ReturnPackageUseCaseRequest) {
     const delivery = await this.deliveryRepository.findById(deliveryId)
 
     if (!delivery) {
-      throw new Error()
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     if (delivery.status !== "delivered") {
-      throw new Error()
+      return bad({ code: "STATUS_RESTRICTION" })
     }
 
-    delivery.packageReturnedAt = new Date()
+    delivery.packageReturned()
 
     await this.deliveryRepository.save(delivery)
 
-    return {
+    return nice({
       delivery,
-    }
+    })
   }
 }
