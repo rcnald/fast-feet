@@ -30,3 +30,7 @@ export class SendNotificationUseCase {
     })
   }
 }
+
+export type SendNotificationUseCaseResponse = Awaited<
+  ReturnType<SendNotificationUseCase["execute"]>
+>

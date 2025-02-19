@@ -3,6 +3,7 @@ import { OnPackageStatusChanged } from "./on-package-status-changed"
 import {
   SendNotificationUseCase,
   SendNotificationUseCaseRequest,
+  SendNotificationUseCaseResponse,
 } from "../use-cases/send-notification"
 import { InMemoryNotificationRepository } from "test/in-memory-repositories/in-memory-notification-repository"
 import { MockInstance } from "vitest"
@@ -24,7 +25,9 @@ let sendNotificationUseCase: SendNotificationUseCase
 let fakeGeocoder: FakeGeocoder
 
 let sendNotificationExecuteSpy: MockInstance<
-  (request: SendNotificationUseCaseRequest) => Promise<any>
+  (
+    request: SendNotificationUseCaseRequest,
+  ) => Promise<SendNotificationUseCaseResponse>
 >
 
 describe("On Package Status Changed", () => {
