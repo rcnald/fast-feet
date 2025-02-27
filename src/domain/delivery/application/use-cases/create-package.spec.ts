@@ -1,5 +1,6 @@
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
 import { CreatePackageUseCase } from "./create-package"
+import { makePackage } from "test/factories/make-package"
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let sut: CreatePackageUseCase
@@ -11,16 +12,11 @@ describe("Create Package", () => {
   })
 
   it("should be able to create a package", async () => {
+    const pack = makePackage()
+
     const [error, result] = await sut.execute({
-      recipientId: "recipient-1",
-      deliveryAddress: {
-        city: "Sao Paulo",
-        state: "SP",
-        street: "Rua da avenida",
-        neighborhood: "Bairro da esquina",
-        number: "13A",
-        zipCode: "73674289",
-      },
+      recipientId: pack.recipientId.toString(),
+      deliveryAddress: pack.deliveryAddress,
     })
 
     expect(error).toEqual(undefined)

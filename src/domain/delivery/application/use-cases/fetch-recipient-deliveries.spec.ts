@@ -8,6 +8,9 @@ import { FakeGeocoder } from "test/geolocation/fake-geocoder"
 import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
 import { Recipient } from "@/domain/delivery/enterprise/entities/recipient"
 import { FetchRecipientDeliveriesUseCase } from "./fetch-recipient-deliveries"
+import { makeRecipient } from "test/factories/make-recipient"
+import { makePackage } from "test/factories/make-package"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -26,27 +29,18 @@ describe("Fetch Recipient Deliveries", () => {
   })
 
   it("should be able to fetch recipient deliveries", async () => {
-    Recipient.create({ name: "John Doe" }, new UniqueId("recipient-id-1"))
+    const recipientOne = makeRecipient()
+    const recipientTwo = makeRecipient()
 
     Array.from({ length: 10 }).forEach((_, index) => {
-      const pack = Package.create(
+      const pack = makePackage(
         {
-          recipientId:
-            index >= 5
-              ? new UniqueId("recipient-id-2")
-              : new UniqueId("recipient-id-1"),
-          deliveryAddress: new Address({
-            city: "Sao Paulo",
-            state: "SP",
-            street: "Rua da avenida",
-            neighborhood: "Bairro da esquina",
-            number: "13A",
-            zipCode: "73674289",
-          }),
+          recipientId: index >= 5 ? recipientOne.id : recipientTwo.id,
         },
         new UniqueId(`package-id-${index + 1}`),
       )
-      const delivery = Delivery.create({
+
+      const delivery = makeDelivery({
         packageId: new UniqueId(`package-id-${index + 1}`),
       })
 
@@ -54,7 +48,9 @@ describe("Fetch Recipient Deliveries", () => {
       inMemoryDeliveryRepository.create(delivery)
     })
 
-    const [_, result] = await sut.execute({ recipientId: "recipient-id-1" })
+    const [_, result] = await sut.execute({
+      recipientId: recipientTwo.id.toString(),
+    })
 
     expect(result?.deliveries).toHaveLength(5)
     expect(result?.deliveries).toEqual(

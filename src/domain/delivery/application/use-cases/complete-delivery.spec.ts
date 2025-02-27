@@ -5,6 +5,7 @@ import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-m
 import { CompleteDeliveryUseCase } from "./complete-delivery"
 import { Geocoder } from "../geolocation/geocoder"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -22,19 +23,15 @@ describe("Complete Delivery", () => {
   })
 
   it("should be able to complete a delivery", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-        packagePickedUpAt: new Date(),
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery({
+      packagePickedUpAt: new Date(),
+      deliveryPersonId: new UniqueId("delivery-person-id-1"),
+    })
 
     await inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "delivery-person-id-1",
       attachmentId: "attachment-id-1",
     })
@@ -42,8 +39,8 @@ describe("Complete Delivery", () => {
     expect(error).toEqual(undefined)
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-        packageId: new UniqueId("package-id-1"),
+        deliveryPersonId: delivery.deliveryPersonId,
+        packageId: delivery.packageId,
         packagePickedUpAt: expect.any(Date),
         packageDeliveredAt: expect.any(Date),
       }),
@@ -63,19 +60,15 @@ describe("Complete Delivery", () => {
   })
 
   it("should not be able to complete a delivery which not belongs to delivery person", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-        packagePickedUpAt: new Date(),
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery({
+      packagePickedUpAt: new Date(),
+      deliveryPersonId: new UniqueId("delivery-person-id-1"),
+    })
 
     await inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "wrong-delivery-person-id-1",
       attachmentId: "attachment-id-1",
     })
@@ -97,7 +90,7 @@ describe("Complete Delivery", () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "delivery-person-id-1",
       attachmentId: "attachment-id-1",
     })

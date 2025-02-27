@@ -1,6 +1,7 @@
 import { FakeHasher } from "test/cryptography/fake-hasher"
 import { InMemoryDeliveryPersonRepository } from "test/in-memory-repositories/in-memory-delivery-person-repository"
 import { RegisterDeliveryPersonUseCase } from "./register-delivery-person"
+import { makeDeliveryPerson } from "test/factories/make-delivery-person"
 
 let inMemoryDeliveryPersonRepository: InMemoryDeliveryPersonRepository
 let hasher: FakeHasher
@@ -45,15 +46,13 @@ describe("Register Delivery Person", () => {
   })
 
   it("should not be able to register a delivery person with an already registered cpf", async () => {
-    await sut.execute({
-      name: "John Doe",
-      cpf: "38979332092",
-      password: "password",
-    })
+    const deliveryPerson = makeDeliveryPerson()
+
+    inMemoryDeliveryPersonRepository.create(deliveryPerson)
 
     const [error] = await sut.execute({
       name: "John Doe",
-      cpf: "38979332092",
+      cpf: deliveryPerson.cpf,
       password: "password",
     })
 

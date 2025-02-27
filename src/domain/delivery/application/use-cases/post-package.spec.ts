@@ -5,6 +5,7 @@ import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-m
 import { Geocoder } from "../geolocation/geocoder"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"
 import { PostPackageUseCase } from "./post-package"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -22,22 +23,17 @@ describe("Post Package", () => {
   })
 
   it("should be able to post a package", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("packed-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery()
 
     await inMemoryDeliveryRepository.create(delivery)
 
     await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
     })
 
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
-        packageId: new UniqueId("packed-id-1"),
+        packageId: delivery.packageId,
         packagePostedAt: expect.any(Date),
       }),
     )
