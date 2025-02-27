@@ -1,12 +1,12 @@
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
-import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
-import { Package } from "@/domain/delivery/enterprise/entities/package"
 import { Geocoder } from "../geolocation/geocoder"
 import { FetchNearbyDeliveriesUseCase } from "./fetch-nearby-deliveries"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"
 import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { makePackage } from "test/factories/make-package"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -26,7 +26,7 @@ describe("Fetch Nearby Deliveries", () => {
 
   it("should be able to fetch nearby deliveries", async () => {
     Array.from({ length: 10 }).forEach((_, index) => {
-      const pack = Package.create(
+      const pack = makePackage(
         {
           recipientId: new UniqueId("recipient-id-1"),
           deliveryAddress: new Address({
@@ -41,7 +41,7 @@ describe("Fetch Nearby Deliveries", () => {
         new UniqueId(`package-id-${index}`),
       )
 
-      const delivery = Delivery.create({
+      const delivery = makeDelivery({
         packageId: pack.id,
         deliveryPersonId: new UniqueId("delivery-person-id-1"),
       })
