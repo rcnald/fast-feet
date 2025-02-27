@@ -1,4 +1,3 @@
-import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { DeliveryRepository } from "../repositories/delivery-repository"
 import { nice } from "@/core/error"
 

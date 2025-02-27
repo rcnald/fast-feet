@@ -1,7 +1,6 @@
 import { PickUpPackageUseCase } from "./pick-up-package"
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
-import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
 import { Geocoder } from "../geolocation/geocoder"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"

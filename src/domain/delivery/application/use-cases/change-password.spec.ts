@@ -1,4 +1,3 @@
-import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 import { FakeHasher } from "test/cryptography/fake-hasher"
 import { InMemoryUserRepository } from "test/in-memory-repositories/in-memory-user-repository"
 import { ChangePasswordUseCase } from "./change-password"
