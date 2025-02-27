@@ -2,6 +2,7 @@ import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-p
 import { FakeHasher } from "test/cryptography/fake-hasher"
 import { InMemoryUserRepository } from "test/in-memory-repositories/in-memory-user-repository"
 import { ChangePasswordUseCase } from "./change-password"
+import { makeDeliveryPerson } from "test/factories/make-delivery-person"
 
 let inMemoryUserRepository: InMemoryUserRepository
 let hasher: FakeHasher
@@ -15,11 +16,7 @@ describe("Change Password", () => {
   })
 
   it("should be able to change password", async () => {
-    const user = DeliveryPerson.create({
-      name: "John Doe",
-      cpf: "38979332092",
-      password: "password-hashed",
-    })
+    const user = makeDeliveryPerson({ password: "password-hashed" })
 
     inMemoryUserRepository.items.push(user)
 
@@ -39,11 +36,7 @@ describe("Change Password", () => {
   })
 
   it("should not be able to change password with invalid current password", async () => {
-    const user = DeliveryPerson.create({
-      name: "John Doe",
-      cpf: "38979332092",
-      password: "password-hashed",
-    })
+    const user = makeDeliveryPerson({ password: "password-hashed" })
 
     inMemoryUserRepository.items.push(user)
 
@@ -58,7 +51,7 @@ describe("Change Password", () => {
     })
     expect(inMemoryUserRepository.items[0]).toEqual(
       expect.objectContaining({
-        password: "password-hashed",
+        password: user.password,
         id: user.id,
       }),
     )

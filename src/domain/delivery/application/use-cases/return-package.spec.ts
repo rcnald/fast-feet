@@ -5,6 +5,7 @@ import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-m
 import { ReturnPackageUseCase } from "./return-package"
 import { Geocoder } from "../geolocation/geocoder"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -23,25 +24,21 @@ describe("Return Package", () => {
   })
 
   it("should be able to return a package", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-        packageDeliveredAt: new Date(),
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery({
+      packageDeliveredAt: new Date(),
+      deliveryPersonId: new UniqueId("delivery-person-id-1"),
+    })
 
     await inMemoryDeliveryRepository.create(delivery)
 
     await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
     })
 
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-        packageId: new UniqueId("package-id-1"),
+        deliveryPersonId: delivery.deliveryPersonId,
+        packageId: delivery.packageId,
         packageDeliveredAt: expect.any(Date),
         packageReturnedAt: expect.any(Date),
       }),

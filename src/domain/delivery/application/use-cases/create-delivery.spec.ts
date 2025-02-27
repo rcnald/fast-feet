@@ -3,6 +3,7 @@ import { InMemoryPackageRepository } from "test/in-memory-repositories/in-memory
 import { Geocoder } from "../geolocation/geocoder"
 import { CreateDeliveryUseCase } from "./create-delivery"
 import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -34,12 +35,12 @@ describe("Post Package", () => {
   })
 
   it("should not be able to post a package that was previous posted", async () => {
-    await sut.execute({
-      packageId: "package-id-1",
-    })
+    const delivery = makeDelivery({ packagePostedAt: new Date() })
+
+    inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      packageId: "package-id-1",
+      packageId: delivery.packageId.toString(),
     })
 
     expect(error).toEqual({

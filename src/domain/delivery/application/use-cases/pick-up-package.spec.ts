@@ -5,6 +5,7 @@ import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
 import { Geocoder } from "../geolocation/geocoder"
 import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { makeDelivery } from "test/factories/make-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -23,25 +24,19 @@ describe("Pick Up Package", () => {
   })
 
   it("should be able to pick up a package", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-        packagePostedAt: new Date(),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery({ packagePostedAt: new Date() })
 
     await inMemoryDeliveryRepository.create(delivery)
 
     await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "delivery-person-id-1",
     })
 
     expect(inMemoryDeliveryRepository.items[0]).toEqual(
       expect.objectContaining({
         deliveryPersonId: new UniqueId("delivery-person-id-1"),
-        packageId: new UniqueId("package-id-1"),
+        packageId: delivery.packageId,
         packagePostedAt: expect.any(Date),
         packagePickedUpAt: expect.any(Date),
       }),
@@ -49,19 +44,15 @@ describe("Pick Up Package", () => {
   })
 
   it("should not be able to pick up a package which belongs to a delivery person", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-        packagePostedAt: new Date(),
-        deliveryPersonId: new UniqueId("delivery-person-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery({
+      packagePostedAt: new Date(),
+      deliveryPersonId: new UniqueId("delivery-person-id-2"),
+    })
 
     await inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "delivery-person-id-2",
     })
 
@@ -69,17 +60,12 @@ describe("Pick Up Package", () => {
   })
 
   it("should not be able to pick up a package that its not posted", async () => {
-    const delivery = Delivery.create(
-      {
-        packageId: new UniqueId("package-id-1"),
-      },
-      new UniqueId("delivery-id-1"),
-    )
+    const delivery = makeDelivery()
 
     await inMemoryDeliveryRepository.create(delivery)
 
     const [error] = await sut.execute({
-      deliveryId: "delivery-id-1",
+      deliveryId: delivery.id.toString(),
       deliveryPersonId: "delivery-person-id-1",
     })
 

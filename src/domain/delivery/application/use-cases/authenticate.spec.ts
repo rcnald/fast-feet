@@ -3,6 +3,7 @@ import { InMemoryUserRepository } from "test/in-memory-repositories/in-memory-us
 import { AuthenticateUserUseCase } from "./authenticate"
 import { FakeEncrypter } from "test/cryptography/fake-encrypter"
 import { FakeHasher } from "test/cryptography/fake-hasher"
+import { makeDeliveryPerson } from "test/factories/make-delivery-person"
 
 let inMemoryUserRepository: InMemoryUserRepository
 let hasher: FakeHasher
@@ -18,16 +19,12 @@ describe("Authenticate", () => {
   })
 
   it("should be able to authenticate", async () => {
-    inMemoryUserRepository.items.push(
-      DeliveryPerson.create({
-        name: "John Doe",
-        cpf: "38979332092",
-        password: "password-hashed",
-      }),
-    )
+    const user = makeDeliveryPerson({ password: "password-hashed" })
+
+    inMemoryUserRepository.items.push(user)
 
     const [error, result] = await sut.execute({
-      cpf: "38979332092",
+      cpf: user.cpf,
       password: "password",
     })
 
@@ -36,13 +33,9 @@ describe("Authenticate", () => {
   })
 
   it("should not be able to authenticate with invalid password", async () => {
-    inMemoryUserRepository.items.push(
-      DeliveryPerson.create({
-        name: "John Doe",
-        cpf: "38979332092",
-        password: "password-hashed",
-      }),
-    )
+    const user = makeDeliveryPerson({ password: "password-hashed" })
+
+    inMemoryUserRepository.items.push(user)
 
     const [error, result] = await sut.execute({
       cpf: "38979332092",
