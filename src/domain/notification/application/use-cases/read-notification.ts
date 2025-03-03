@@ -1,5 +1,5 @@
-import { bad, nice } from "@/core/error"
-import { NotificationRepository } from "../repositories/notification-repository"
+import { bad, nice } from '@/core/error'
+import { NotificationRepository } from '../repositories/notification-repository'
 
 export interface ReadNotificationUseCaseRequest {
   notificationId: string
@@ -17,11 +17,11 @@ export class ReadNotificationUseCase {
       await this.notificationRepository.findById(notificationId)
 
     if (!notification) {
-      return bad({ code: "RESOURCE_NOT_FOUND" })
+      return bad({ code: 'RESOURCE_NOT_FOUND' })
     }
 
     if (notification.recipientId.toString() !== recipientId) {
-      return bad({ code: "ACCESS_DENIED" })
+      return bad({ code: 'ACCESS_DENIED' })
     }
     notification.read()
 

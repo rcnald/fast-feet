@@ -1,5 +1,5 @@
-import { Entity } from "@/core/entities/entity"
-import { UniqueId } from "./value-objects/unique-id"
+import { Entity } from '@/core/entities/entity'
+import { UniqueId } from './value-objects/unique-id'
 
 export interface DeliveryPersonProps {
   name: string
@@ -8,7 +8,7 @@ export interface DeliveryPersonProps {
 }
 
 export class DeliveryPerson extends Entity<DeliveryPersonProps> {
-  static role = "DELIVERY_PERSON" as const
+  static role = 'DELIVERY_PERSON' as const
 
   get role() {
     return DeliveryPerson.role

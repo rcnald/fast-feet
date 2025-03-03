@@ -1,17 +1,17 @@
-import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
-import { CreatePackageUseCase } from "./create-package"
-import { makePackage } from "test/factories/make-package"
+import { InMemoryPackageRepository } from '@/../test/in-memory-repositories/in-memory-package-repository'
+import { CreatePackageUseCase } from './create-package'
+import { makePackage } from 'test/factories/make-package'
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let sut: CreatePackageUseCase
 
-describe("Create Package", () => {
+describe('Create Package', () => {
   beforeEach(() => {
     inMemoryPackageRepository = new InMemoryPackageRepository()
     sut = new CreatePackageUseCase(inMemoryPackageRepository)
   })
 
-  it("should be able to create a package", async () => {
+  it('should be able to create a package', async () => {
     const pack = makePackage()
 
     const [error, result] = await sut.execute({

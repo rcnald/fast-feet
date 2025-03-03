@@ -1,18 +1,17 @@
-import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
-import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
-import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
-import { InMemoryPackageRepository } from "@/../test/in-memory-repositories/in-memory-package-repository"
-import { ReturnPackageUseCase } from "./return-package"
-import { Geocoder } from "../geolocation/geocoder"
-import { FakeGeocoder } from "test/geolocation/fake-geocoder"
-import { makeDelivery } from "test/factories/make-delivery"
+import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { InMemoryPackageRepository } from '@/../test/in-memory-repositories/in-memory-package-repository'
+import { ReturnPackageUseCase } from './return-package'
+import { Geocoder } from '../geolocation/geocoder'
+import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
+import { makeDelivery } from 'test/factories/make-delivery'
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
 let fakeGeocoder: Geocoder
 let sut: ReturnPackageUseCase
 
-describe("Return Package", () => {
+describe('Return Package', () => {
   beforeEach(() => {
     inMemoryPackageRepository = new InMemoryPackageRepository()
     fakeGeocoder = new FakeGeocoder()
@@ -23,10 +22,10 @@ describe("Return Package", () => {
     sut = new ReturnPackageUseCase(inMemoryDeliveryRepository)
   })
 
-  it("should be able to return a package", async () => {
+  it('should be able to return a package', async () => {
     const delivery = makeDelivery({
       packageDeliveredAt: new Date(),
-      deliveryPersonId: new UniqueId("delivery-person-id-1"),
+      deliveryPersonId: new UniqueId('delivery-person-id-1'),
     })
 
     await inMemoryDeliveryRepository.create(delivery)
