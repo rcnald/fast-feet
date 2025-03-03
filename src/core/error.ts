@@ -1,4 +1,4 @@
-import { Mutable } from "./types/mutable"
+import { Mutable } from './types/mutable'
 
 export function bad<const T>(error: T) {
   return [error, undefined] as [Mutable<T>, undefined]

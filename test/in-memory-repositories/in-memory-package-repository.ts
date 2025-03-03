@@ -1,5 +1,5 @@
-import { PackageRepository } from "@/domain/delivery/application/repositories/package-repository"
-import { Package } from "@/domain/delivery/enterprise/entities/package"
+import { PackageRepository } from '@/domain/delivery/application/repositories/package-repository'
+import { Package } from '@/domain/delivery/enterprise/entities/package'
 
 export class InMemoryPackageRepository implements PackageRepository {
   public items: Package[] = []

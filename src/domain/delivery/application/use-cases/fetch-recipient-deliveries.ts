@@ -1,5 +1,5 @@
-import { DeliveryRepository } from "../repositories/delivery-repository"
-import { nice } from "@/core/error"
+import { DeliveryRepository } from '../repositories/delivery-repository'
+import { nice } from '@/core/error'
 
 export interface FetchRecipientDeliveriesUseCaseRequest {
   recipientId: string

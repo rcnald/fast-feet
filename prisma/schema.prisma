@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ROLE {
+  DELIVERY_PERSON
+  ADMIN
+}
+
+model User {
+  id       String @id() @default(uuid())
+  name     String
+  cpf      String @unique()
+  password String
+
+  role ROLE @default(DELIVERY_PERSON)
+
+  delivery Delivery[]
+
+  @@map("users")
+}
+
+model Recipient {
+  id   String @id() @default(uuid())
+  name String
+
+  package      Package[]
+  Notification Notification[]
+
+  @@map("recipients")
+}
+
+model Package {
+  id          String @id @default(uuid())
+  recipientId String @map("recipient_id")
+
+  street       String
+  city         String
+  state        String
+  neighborhood String
+  number       String
+  zipCode      Int    @map("zip_code")
+
+  createdAt DateTime @map("created_at")
+
+  recipient Recipient  @relation(fields: [recipientId], references: [id])
+  delivery  Delivery[]
+
+  @@map("packages")
+}
+
+model Delivery {
+  id               String @id @default(uuid())
+  packageId        String @map("package_id")
+  deliveryPersonId String @map("delivery_person_id")
+
+  createdAt DateTime @map("created_at")
+
+  packagePostedAt    DateTime? @map("package_posted_at")
+  packagePickedUpAt  DateTime? @map("package_picked_up_at")
+  packageDeliveredAt DateTime? @map("package_delivered_at")
+  packageReturnedAt  DateTime? @map("package_returned_at")
+
+  deliveryPerson User    @relation(fields: [deliveryPersonId], references: [id])
+  package        Package @relation(fields: [packageId], references: [id])
+
+  @@map("deliveries")
+}
+
+model Notification {
+  id          String @id @default(uuid())
+  recipientId String @map("recipient_id")
+  title       String
+  content     String
+
+  createdAt DateTime  @map("created_at")
+  readAt    DateTime? @map("read_at")
+
+  recipient Recipient @relation(fields: [recipientId], references: [id])
+
+  @@map("notifications")
+}

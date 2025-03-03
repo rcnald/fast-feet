@@ -1,8 +1,8 @@
-import { Package } from "@/domain/delivery/enterprise/entities/package"
-import { PackageRepository } from "../repositories/package-repository"
-import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
-import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
-import { nice } from "@/core/error"
+import { Package } from '@/domain/delivery/enterprise/entities/package'
+import { PackageRepository } from '../repositories/package-repository'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
+import { nice } from '@/core/error'
 
 export interface CreatePackageUseCaseRequest {
   recipientId: string

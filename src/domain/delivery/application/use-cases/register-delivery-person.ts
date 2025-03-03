@@ -1,7 +1,7 @@
-import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
-import { DeliveryPersonRepository } from "../repositories/delivery-person-repository"
-import { HashGenerator } from "../cryptography/hash-generator"
-import { bad, nice } from "@/core/error"
+import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
+import { DeliveryPersonRepository } from '../repositories/delivery-person-repository'
+import { HashGenerator } from '../cryptography/hash-generator'
+import { bad, nice } from '@/core/error'
 
 export interface RegisterDeliveryPersonUseCaseRequest {
   name: string
@@ -20,7 +20,7 @@ export class RegisterDeliveryPersonUseCase {
       await this.deliveryPersonRepository.findByCPF(cpf)
 
     if (deliveryPersonExists) {
-      return bad({ code: "RESOURCE_ALREADY_EXISTS" })
+      return bad({ code: 'RESOURCE_ALREADY_EXISTS' })
     }
 
     const hashedPassword = await this.hashGenerator.hash(password)
