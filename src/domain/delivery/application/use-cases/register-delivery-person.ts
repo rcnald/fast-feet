@@ -1,7 +1,8 @@
-import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
-import { DeliveryPersonRepository } from '../repositories/delivery-person-repository'
-import { HashGenerator } from '../cryptography/hash-generator'
 import { bad, nice } from '@/core/error'
+import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
+import { Injectable } from '@nestjs/common'
+import { HashGenerator } from '../cryptography/hash-generator'
+import { DeliveryPersonRepository } from '../repositories/delivery-person-repository'
 
 export interface RegisterDeliveryPersonUseCaseRequest {
   name: string
@@ -9,6 +10,7 @@ export interface RegisterDeliveryPersonUseCaseRequest {
   password: string
 }
 
+@Injectable()
 export class RegisterDeliveryPersonUseCase {
   constructor(
     private deliveryPersonRepository: DeliveryPersonRepository,
