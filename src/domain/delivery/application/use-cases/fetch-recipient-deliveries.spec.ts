@@ -31,9 +31,7 @@ describe('Fetch Recipient Deliveries', () => {
     Array.from({ length: 10 }).forEach((_, index) => {
       const pack = makePackage(
         {
-          recipientId: index >= 5
-            ? recipientOne.id
-            : recipientTwo.id,
+          recipientId: index >= 5 ? recipientOne.id : recipientTwo.id,
         },
         new UniqueId(`package-id-${index + 1}`),
       )

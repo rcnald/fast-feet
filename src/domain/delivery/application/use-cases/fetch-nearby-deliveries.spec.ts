@@ -30,9 +30,7 @@ describe('Fetch Nearby Deliveries', () => {
         {
           recipientId: new UniqueId('recipient-id-1'),
           deliveryAddress: new Address({
-            city: index >= 5
-              ? 'rio de janeiro'
-              : 'sao paulo',
+            city: index >= 5 ? 'rio de janeiro' : 'sao paulo',
             state: 'SP',
             street: 'Rua da avenida',
             neighborhood: 'Bairro da esquina',

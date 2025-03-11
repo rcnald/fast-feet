@@ -1,19 +1,16 @@
-import { DeliveryPersonRepository } from "@/domain/delivery/application/repositories/delivery-person-repository";
-import { Module } from "@nestjs/common";
-import { PrismaService } from "./prisma/prisma.service";
-import { PrismaDeliveryPersonRepository } from "./prisma/repositories/prisma-delivery-person-repository";
+import { DeliveryPersonRepository } from '@/domain/delivery/application/repositories/delivery-person-repository'
+import { Module } from '@nestjs/common'
+import { PrismaService } from './prisma/prisma.service'
+import { PrismaDeliveryPersonRepository } from './prisma/repositories/prisma-delivery-person-repository'
 
-@Module({ 
+@Module({
   providers: [
     PrismaService,
     {
-      provide: DeliveryPersonRepository, 
-      useClass: PrismaDeliveryPersonRepository
-    }
+      provide: DeliveryPersonRepository,
+      useClass: PrismaDeliveryPersonRepository,
+    },
   ],
-  exports: [
-    PrismaService,
-    DeliveryPersonRepository
-  ]
+  exports: [PrismaService, DeliveryPersonRepository],
 })
 export class DatabaseModule {}

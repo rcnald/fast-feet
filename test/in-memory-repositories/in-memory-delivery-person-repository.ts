@@ -2,7 +2,8 @@ import { DeliveryPersonRepository } from '@/domain/delivery/application/reposito
 import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
 
 export class InMemoryDeliveryPersonRepository
-implements DeliveryPersonRepository {
+  implements DeliveryPersonRepository
+{
   public items: DeliveryPerson[] = []
 
   async create(deliveryPerson: DeliveryPerson) {
