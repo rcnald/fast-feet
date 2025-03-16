@@ -1,4 +1,5 @@
 import { bad, nice } from '@/core/error'
+
 import { Encrypter } from '../cryptography/encrypter'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { UserRepository } from '../repositories/user-repository'

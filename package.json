@@ -16,7 +16,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -43,6 +43,7 @@
     "@types/supertest": "^6.0.2",
     "dotenv": "^16.4.7",
     "eslint": "^9.22.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.0.0",
     "prisma": "^6.4.1",
     "source-map-support": "^0.5.21",

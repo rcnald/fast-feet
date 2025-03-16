@@ -1,4 +1,3 @@
-import { RegisterDeliveryPersonUseCase } from '@/domain/delivery/application/use-cases/register-delivery-person'
 import {
   Body,
   ConflictException,
@@ -7,6 +6,9 @@ import {
   Post,
 } from '@nestjs/common'
 import { z } from 'zod'
+
+import { RegisterDeliveryPersonUseCase } from '@/domain/delivery/application/use-cases/register-delivery-person'
+
 import { ZodValidationPipe } from '../pipes/zod-validate.pipe'
 
 const createAccountBodySchema = z.object({

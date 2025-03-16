@@ -1,21 +1,23 @@
+import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
+import { InMemoryDeliveryRepository } from 'test/in-memory-repositories/in-memory-delivery-repository'
+import { InMemoryNotificationRepository } from 'test/in-memory-repositories/in-memory-notification-repository'
 import { InMemoryPackageRepository } from 'test/in-memory-repositories/in-memory-package-repository'
-import { OnPackageStatusChanged } from './on-package-status-changed'
+import { InMemoryRecipientRepository } from 'test/in-memory-repositories/in-memory-recipient-repository'
+import { MockInstance } from 'vitest'
+
+import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
+import { Package } from '@/domain/delivery/enterprise/entities/package'
+import { Recipient } from '@/domain/delivery/enterprise/entities/recipient'
+import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { waitFor } from '@/utils/wait-for'
+
 import {
   SendNotificationUseCase,
   SendNotificationUseCaseRequest,
   SendNotificationUseCaseResponse,
 } from '../use-cases/send-notification'
-import { InMemoryNotificationRepository } from 'test/in-memory-repositories/in-memory-notification-repository'
-import { MockInstance } from 'vitest'
-import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { Recipient } from '@/domain/delivery/enterprise/entities/recipient'
-import { Package } from '@/domain/delivery/enterprise/entities/package'
-import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
-import { InMemoryRecipientRepository } from 'test/in-memory-repositories/in-memory-recipient-repository'
-import { InMemoryDeliveryRepository } from 'test/in-memory-repositories/in-memory-delivery-repository'
-import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
-import { waitFor } from '@/utils/wait-for'
+import { OnPackageStatusChanged } from './on-package-status-changed'
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let inMemoryRecipientRepository: InMemoryRecipientRepository

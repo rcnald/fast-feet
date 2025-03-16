@@ -1,7 +1,9 @@
 import { InMemoryNotificationRepository } from 'test/in-memory-repositories/in-memory-notification-repository'
-import { ReadNotificationUseCase } from './read-notification'
-import { Notification } from '../../enterprise/entities/notification'
+
 import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
+import { Notification } from '../../enterprise/entities/notification'
+import { ReadNotificationUseCase } from './read-notification'
 
 let inMemoryNotificationsRepository: InMemoryNotificationRepository
 let sut: ReadNotificationUseCase

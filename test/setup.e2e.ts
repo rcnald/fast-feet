@@ -1,8 +1,10 @@
-import { env } from '@/infra/env/env'
-import { randomUUID } from 'node:crypto'
-import { config } from 'dotenv'
 import { execSync } from 'node:child_process'
+import { randomUUID } from 'node:crypto'
+
 import { PrismaClient } from '@prisma/client'
+import { config } from 'dotenv'
+
+import { env } from '@/infra/env/env'
 
 config({ path: '.env', override: true })
 config({ path: '.env.test', override: true })
@@ -11,6 +13,8 @@ const prisma = new PrismaClient()
 
 function generateUniqueDatabaseURL(schemaId: string) {
   const databaseURL = new URL(env.DATABASE_URL)
+
+  console.log(databaseURL)
 
   databaseURL.searchParams.set('schema', schemaId)
 

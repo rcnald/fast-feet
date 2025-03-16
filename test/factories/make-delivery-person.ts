@@ -1,9 +1,10 @@
+import { randomUUID } from 'crypto'
+
 import {
   DeliveryPerson,
   DeliveryPersonProps,
 } from '@/domain/delivery/enterprise/entities/delivery-person'
 import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { randomUUID } from 'crypto'
 
 export function makeDeliveryPerson(
   override: Partial<DeliveryPersonProps> = {},

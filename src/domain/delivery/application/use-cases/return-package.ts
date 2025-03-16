@@ -1,5 +1,6 @@
-import { DeliveryRepository } from '../repositories/delivery-repository'
 import { bad, nice } from '@/core/error'
+
+import { DeliveryRepository } from '../repositories/delivery-repository'
 
 export interface ReturnPackageUseCaseRequest {
   deliveryId: string

@@ -1,6 +1,7 @@
+import { Prisma, User as PrismaUser } from '@prisma/client'
+
 import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
 import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { Prisma, User as PrismaUser } from '@prisma/client'
 
 export class PrismaDeliveryPersonMapper {
   static toPrisma(

@@ -1,10 +1,12 @@
-import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { InMemoryPackageRepository } from '@/../test/in-memory-repositories/in-memory-package-repository'
-import { ReturnPackageUseCase } from './return-package'
-import { Geocoder } from '../geolocation/geocoder'
-import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
 import { makeDelivery } from 'test/factories/make-delivery'
+import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
+
+import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
+import { InMemoryPackageRepository } from '@/../test/in-memory-repositories/in-memory-package-repository'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
+import { Geocoder } from '../geolocation/geocoder'
+import { ReturnPackageUseCase } from './return-package'
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository

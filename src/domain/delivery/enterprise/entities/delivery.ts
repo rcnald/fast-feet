@@ -1,7 +1,8 @@
-import { UniqueId } from './value-objects/unique-id'
-import { Optional } from '@/core/types/optional'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
+import { Optional } from '@/core/types/optional'
+
 import { DeliveryPackageStatusChangedEvent } from '../events/delivery-package-status-changed-event'
+import { UniqueId } from './value-objects/unique-id'
 
 export interface DeliveryProps {
   deliveryPersonId?: UniqueId

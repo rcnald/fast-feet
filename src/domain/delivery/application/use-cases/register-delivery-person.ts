@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common'
+
 import { bad, nice } from '@/core/error'
 import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
-import { Injectable } from '@nestjs/common'
+
 import { HashGenerator } from '../cryptography/hash-generator'
 import { DeliveryPersonRepository } from '../repositories/delivery-person-repository'
 

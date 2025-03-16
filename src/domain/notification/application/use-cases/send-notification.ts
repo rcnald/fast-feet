@@ -1,7 +1,8 @@
+import { nice } from '@/core/error'
 import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
 import { Notification } from '../../enterprise/entities/notification'
 import { NotificationRepository } from '../repositories/notification-repository'
-import { nice } from '@/core/error'
 
 export interface SendNotificationUseCaseRequest {
   recipientId: string

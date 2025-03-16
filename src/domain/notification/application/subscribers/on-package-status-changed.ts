@@ -1,8 +1,9 @@
-import { EventHandler } from '@/core/events/event-handler'
-import { DeliveryPackageStatusChangedEvent } from '@/domain/delivery/enterprise/events/delivery-package-status-changed-event'
-import { SendNotificationUseCase } from '../use-cases/send-notification'
-import { PackageRepository } from '@/domain/delivery/application/repositories/package-repository'
 import { DomainEvents } from '@/core/events/domain-events'
+import { EventHandler } from '@/core/events/event-handler'
+import { PackageRepository } from '@/domain/delivery/application/repositories/package-repository'
+import { DeliveryPackageStatusChangedEvent } from '@/domain/delivery/enterprise/events/delivery-package-status-changed-event'
+
+import { SendNotificationUseCase } from '../use-cases/send-notification'
 
 export const DELIVERY_STATUS = {
   returned: 'foi devolvido ao remetente',

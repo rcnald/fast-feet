@@ -1,4 +1,5 @@
 import { bad, nice } from '@/core/error'
+
 import { NotificationRepository } from '../repositories/notification-repository'
 
 export interface ReadNotificationUseCaseRequest {

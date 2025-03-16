@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
+
 import { Address } from './value-objects/address'
 import { UniqueId } from './value-objects/unique-id'
 
