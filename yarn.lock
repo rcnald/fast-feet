@@ -2026,23 +2026,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/eslint-plugin@npm:^1.1.36":
-  version: 1.1.36
-  resolution: "@vitest/eslint-plugin@npm:1.1.36"
-  peerDependencies:
-    "@typescript-eslint/utils": ^8.24.0
-    eslint: ">= 8.57.0"
-    typescript: ">= 5.0.0"
-    vitest: "*"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-    vitest:
-      optional: true
-  checksum: 10c0/8337c8355c03eb4db25f9604cd5eb46313b4e3debeca324d7d50a920faaf5ab965bc1297dbf33c5e3946f3512f818604232b84a482db70aaa8d9732a54295dd4
-  languageName: node
-  linkType: hard
-
 "@vitest/expect@npm:3.0.7":
   version: 3.0.7
   resolution: "@vitest/expect@npm:3.0.7"
@@ -3580,7 +3563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:16.4.7, dotenv@npm:^16.4.5":
+"dotenv@npm:16.4.7, dotenv@npm:^16.4.5, dotenv@npm:^16.4.7":
   version: 16.4.7
   resolution: "dotenv@npm:16.4.7"
   checksum: 10c0/be9f597e36a8daf834452daa1f4cc30e5375a5968f98f46d89b16b983c567398a330580c88395069a77473943c06b877d1ca25b4afafcdd6d4adb549e8293462
@@ -4443,8 +4426,8 @@ __metadata:
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.10.7"
     "@types/supertest": "npm:^6.0.2"
-    "@vitest/eslint-plugin": "npm:^1.1.36"
     bcryptjs: "npm:^3.0.2"
+    dotenv: "npm:^16.4.7"
     eslint: "npm:^9.22.0"
     globals: "npm:^16.0.0"
     prisma: "npm:^6.4.1"
