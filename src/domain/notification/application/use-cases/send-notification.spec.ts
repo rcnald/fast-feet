@@ -1,4 +1,5 @@
 import { InMemoryNotificationRepository } from 'test/in-memory-repositories/in-memory-notification-repository'
+
 import { SendNotificationUseCase } from './send-notification'
 
 let inMemoryNotificationsRepository: InMemoryNotificationRepository

@@ -1,7 +1,8 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
-import { InMemoryUserRepository } from 'test/in-memory-repositories/in-memory-user-repository'
-import { ChangePasswordUseCase } from './change-password'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
+import { InMemoryUserRepository } from 'test/in-memory-repositories/in-memory-user-repository'
+
+import { ChangePasswordUseCase } from './change-password'
 
 let inMemoryUserRepository: InMemoryUserRepository
 let hasher: FakeHasher

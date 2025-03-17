@@ -1,6 +1,7 @@
 import { DomainEvent } from '@/core/events/domain-event'
-import { UniqueId } from '../entities/value-objects/unique-id'
+
 import { Delivery } from '../entities/delivery'
+import { UniqueId } from '../entities/value-objects/unique-id'
 
 export class DeliveryPackageStatusChangedEvent implements DomainEvent {
   public occurredAt: Date

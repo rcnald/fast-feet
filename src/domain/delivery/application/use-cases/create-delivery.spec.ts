@@ -1,9 +1,11 @@
+import { makeDelivery } from 'test/factories/make-delivery'
 import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
 import { InMemoryPackageRepository } from 'test/in-memory-repositories/in-memory-package-repository'
+
+import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
+
 import { Geocoder } from '../geolocation/geocoder'
 import { CreateDeliveryUseCase } from './create-delivery'
-import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
-import { makeDelivery } from 'test/factories/make-delivery'
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository

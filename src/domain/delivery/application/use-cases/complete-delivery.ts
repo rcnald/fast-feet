@@ -1,6 +1,7 @@
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { DeliveryRepository } from '../repositories/delivery-repository'
 import { bad, nice } from '@/core/error'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
+import { DeliveryRepository } from '../repositories/delivery-repository'
 
 export interface CompleteDeliveryUseCaseRequest {
   deliveryId: string

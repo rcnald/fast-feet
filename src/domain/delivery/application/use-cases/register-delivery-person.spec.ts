@@ -1,7 +1,8 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
-import { InMemoryDeliveryPersonRepository } from 'test/in-memory-repositories/in-memory-delivery-person-repository'
-import { RegisterDeliveryPersonUseCase } from './register-delivery-person'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
+import { InMemoryDeliveryPersonRepository } from 'test/in-memory-repositories/in-memory-delivery-person-repository'
+
+import { RegisterDeliveryPersonUseCase } from './register-delivery-person'
 
 let inMemoryDeliveryPersonRepository: InMemoryDeliveryPersonRepository
 let hasher: FakeHasher

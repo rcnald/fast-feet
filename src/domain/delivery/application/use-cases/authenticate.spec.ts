@@ -1,8 +1,9 @@
-import { InMemoryUserRepository } from 'test/in-memory-repositories/in-memory-user-repository'
-import { AuthenticateUserUseCase } from './authenticate'
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
+import { InMemoryUserRepository } from 'test/in-memory-repositories/in-memory-user-repository'
+
+import { AuthenticateUserUseCase } from './authenticate'
 
 let inMemoryUserRepository: InMemoryUserRepository
 let hasher: FakeHasher

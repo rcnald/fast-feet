@@ -1,12 +1,14 @@
+import { makeDelivery } from 'test/factories/make-delivery'
+import { makePackage } from 'test/factories/make-package'
+import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
+
 import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
 import { InMemoryPackageRepository } from '@/../test/in-memory-repositories/in-memory-package-repository'
+import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
+import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
 import { Geocoder } from '../geolocation/geocoder'
 import { FetchNearbyDeliveriesUseCase } from './fetch-nearby-deliveries'
-import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
-import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
-import { makePackage } from 'test/factories/make-package'
-import { makeDelivery } from 'test/factories/make-delivery'
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
@@ -30,9 +32,7 @@ describe('Fetch Nearby Deliveries', () => {
         {
           recipientId: new UniqueId('recipient-id-1'),
           deliveryAddress: new Address({
-            city: index >= 5
-              ? 'rio de janeiro'
-              : 'sao paulo',
+            city: index >= 5 ? 'rio de janeiro' : 'sao paulo',
             state: 'SP',
             street: 'Rua da avenida',
             neighborhood: 'Bairro da esquina',

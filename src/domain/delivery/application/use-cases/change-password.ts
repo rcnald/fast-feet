@@ -1,4 +1,5 @@
 import { bad, nice } from '@/core/error'
+
 import { HashComparer } from '../cryptography/hash-comparer'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { UserRepository } from '../repositories/user-repository'

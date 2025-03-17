@@ -1,4 +1,5 @@
 import { InMemoryRecipientRepository } from '@/../test/in-memory-repositories/in-memory-recipient-repository'
+
 import { RegisterRecipientUseCase } from './register-recipient'
 
 let inMemoryRecipientRepository: InMemoryRecipientRepository

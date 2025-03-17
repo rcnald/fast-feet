@@ -1,7 +1,8 @@
 import { bad, nice } from '@/core/error'
-import { DeliveryRepository } from '../repositories/delivery-repository'
 import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
 import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+
+import { DeliveryRepository } from '../repositories/delivery-repository'
 
 export interface CreateDeliveryUseCaseRequest {
   packageId: string
