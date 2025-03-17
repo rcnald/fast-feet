@@ -1,8 +1,8 @@
-import { bad, nice } from '@/core/error'
+import { bad, nice } from "@/core/error"
 
-import { HashComparer } from '../cryptography/hash-comparer'
-import { HashGenerator } from '../cryptography/hash-generator'
-import { UserRepository } from '../repositories/user-repository'
+import { HashComparer } from "../cryptography/hash-comparer"
+import { HashGenerator } from "../cryptography/hash-generator"
+import { UserRepository } from "../repositories/user-repository"
 
 export interface ChangePasswordUseCaseRequest {
   currentPassword: string
@@ -25,7 +25,7 @@ export class ChangePasswordUseCase {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
-      return bad({ code: 'RESOURCE_NOT_FOUND' })
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     const isPasswordValid = await this.hashComparer.compare(
@@ -34,7 +34,7 @@ export class ChangePasswordUseCase {
     )
 
     if (!isPasswordValid) {
-      return bad({ code: 'PASSWORD_INVALID' })
+      return bad({ code: "PASSWORD_INVALID" })
     }
 
     const newPassword = await this.hasherGenerator.hash(password)

@@ -1,7 +1,7 @@
-import { nice } from '@/core/error'
-import { Recipient } from '@/domain/delivery/enterprise/entities/recipient'
+import { nice } from "@/core/error"
+import { Recipient } from "@/domain/delivery/enterprise/entities/recipient"
 
-import { RecipientRepository } from '../repositories/recipient-repository'
+import { RecipientRepository } from "../repositories/recipient-repository"
 
 export interface RegisterRecipientUseCaseRequest {
   name: string

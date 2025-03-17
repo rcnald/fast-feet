@@ -1,6 +1,6 @@
-import { bad, nice } from '@/core/error'
+import { bad, nice } from "@/core/error"
 
-import { DeliveryRepository } from '../repositories/delivery-repository'
+import { DeliveryRepository } from "../repositories/delivery-repository"
 
 export interface PostPackageUseCaseRequest {
   deliveryId: string
@@ -13,7 +13,7 @@ export class PostPackageUseCase {
     const delivery = await this.deliveryRepository.findById(deliveryId)
 
     if (!delivery) {
-      return bad({ code: 'RESOURCE_NOT_FOUND' })
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     delivery.packagePosted()

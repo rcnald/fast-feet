@@ -1,7 +1,7 @@
-import { bad, nice } from '@/core/error'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { bad, nice } from "@/core/error"
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 
-import { DeliveryRepository } from '../repositories/delivery-repository'
+import { DeliveryRepository } from "../repositories/delivery-repository"
 
 export interface CompleteDeliveryUseCaseRequest {
   deliveryId: string
@@ -20,15 +20,15 @@ export class CompleteDeliveryUseCase {
     const delivery = await this.deliveryRepository.findById(deliveryId)
 
     if (!delivery) {
-      return bad({ code: 'RESOURCE_NOT_FOUND' })
+      return bad({ code: "RESOURCE_NOT_FOUND" })
     }
 
     if (delivery.deliveryPersonId?.toString() !== deliveryPersonId) {
-      return bad({ code: 'ACCESS_DENIED' })
+      return bad({ code: "ACCESS_DENIED" })
     }
 
-    if (delivery.status !== 'picked_up') {
-      return bad({ code: 'STATUS_RESTRICTION' })
+    if (delivery.status !== "picked_up") {
+      return bad({ code: "STATUS_RESTRICTION" })
     }
 
     delivery.attachmentId = new UniqueId(attachmentId)

@@ -1,11 +1,11 @@
-import { DomainEvents } from '@/core/events/domain-events'
-import { Geocoder } from '@/domain/delivery/application/geolocation/geocoder'
-import { DeliveryRepository } from '@/domain/delivery/application/repositories/delivery-repository'
-import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
-import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
-import { getDistanceBetweenCoordinates } from '@/utils/getDistanceBetweenCoordinates'
+import { DomainEvents } from "@/core/events/domain-events"
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
+import { DeliveryRepository } from "@/domain/delivery/application/repositories/delivery-repository"
+import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates"
 
-import { InMemoryPackageRepository } from './in-memory-package-repository'
+import { InMemoryPackageRepository } from "./in-memory-package-repository"
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   public items: Delivery[] = []

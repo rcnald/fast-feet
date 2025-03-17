@@ -1,5 +1,5 @@
-import { Admin } from '@/domain/delivery/enterprise/entities/admin'
-import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
+import { Admin } from "@/domain/delivery/enterprise/entities/admin"
+import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 
 export type User = Admin | DeliveryPerson
 

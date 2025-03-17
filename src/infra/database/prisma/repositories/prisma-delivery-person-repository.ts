@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable } from "@nestjs/common"
 
-import { DeliveryPersonRepository } from '@/domain/delivery/application/repositories/delivery-person-repository'
-import { DeliveryPerson } from '@/domain/delivery/enterprise/entities/delivery-person'
+import { DeliveryPersonRepository } from "@/domain/delivery/application/repositories/delivery-person-repository"
+import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 
-import { PrismaDeliveryPersonMapper } from '../mappers/prisma-delivery-person-mapper'
-import { PrismaService } from '../prisma.service'
+import { PrismaDeliveryPersonMapper } from "../mappers/prisma-delivery-person-mapper"
+import { PrismaService } from "../prisma.service"
 
 @Injectable()
 export class PrismaDeliveryPersonRepository

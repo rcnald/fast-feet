@@ -1,6 +1,6 @@
-import { nice } from '@/core/error'
+import { nice } from "@/core/error"
 
-import { DeliveryRepository } from '../repositories/delivery-repository'
+import { DeliveryRepository } from "../repositories/delivery-repository"
 
 export interface FetchNearbyDeliveriesUseCaseRequest {
   deliveryPersonLatitude: string

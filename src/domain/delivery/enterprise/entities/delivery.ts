@@ -1,8 +1,8 @@
-import { AggregateRoot } from '@/core/entities/aggregate-root'
-import { Optional } from '@/core/types/optional'
+import { AggregateRoot } from "@/core/entities/aggregate-root"
+import { Optional } from "@/core/types/optional"
 
-import { DeliveryPackageStatusChangedEvent } from '../events/delivery-package-status-changed-event'
-import { UniqueId } from './value-objects/unique-id'
+import { DeliveryPackageStatusChangedEvent } from "../events/delivery-package-status-changed-event"
+import { UniqueId } from "./value-objects/unique-id"
 
 export interface DeliveryProps {
   deliveryPersonId?: UniqueId
@@ -86,15 +86,15 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
   }
 
   get status() {
-    if (this.props.packageReturnedAt) return 'returned'
-    if (this.props.packageDeliveredAt) return 'delivered'
-    if (this.props.packagePickedUpAt) return 'picked_up'
-    if (this.props.packagePostedAt) return 'awaiting_pickup'
+    if (this.props.packageReturnedAt) return "returned"
+    if (this.props.packageDeliveredAt) return "delivered"
+    if (this.props.packagePickedUpAt) return "picked_up"
+    if (this.props.packagePostedAt) return "awaiting_pickup"
 
-    return 'uninitialized'
+    return "uninitialized"
   }
 
-  static create(props: Optional<DeliveryProps, 'createdAt'>, id?: UniqueId) {
+  static create(props: Optional<DeliveryProps, "createdAt">, id?: UniqueId) {
     return new Delivery(
       {
         ...props,

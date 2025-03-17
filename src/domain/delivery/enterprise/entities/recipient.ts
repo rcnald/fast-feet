@@ -1,6 +1,6 @@
-import { Entity } from '@/core/entities/entity'
+import { Entity } from "@/core/entities/entity"
 
-import { UniqueId } from './value-objects/unique-id'
+import { UniqueId } from "./value-objects/unique-id"
 
 export interface RecipientProps {
   name: string

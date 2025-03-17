@@ -1,19 +1,19 @@
-import { execSync } from 'node:child_process'
-import { randomUUID } from 'node:crypto'
+import { execSync } from "node:child_process"
+import { randomUUID } from "node:crypto"
 
-import { PrismaClient } from '@prisma/client'
-import { config } from 'dotenv'
+import { PrismaClient } from "@prisma/client"
+import { config } from "dotenv"
 
-import { env } from '@/infra/env/env'
+import { env } from "@/infra/env/env"
 
-config({ path: '.env.test', override: true })
+config({ path: ".env.test", override: true })
 
 const prisma = new PrismaClient()
 
 function generateUniqueDatabaseURL(schemaId: string) {
   const databaseURL = new URL(env.DATABASE_URL)
 
-  databaseURL.searchParams.set('schema', schemaId)
+  databaseURL.searchParams.set("schema", schemaId)
 
   return databaseURL.toString()
 }
@@ -25,7 +25,7 @@ beforeAll(() => {
 
   process.env.DATABASE_URL = databaseURL
 
-  execSync('npx prisma migrate deploy')
+  execSync("npx prisma migrate deploy")
 })
 
 afterAll(async () => {

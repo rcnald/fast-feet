@@ -1,8 +1,8 @@
-import { bad, nice } from '@/core/error'
+import { bad, nice } from "@/core/error"
 
-import { Encrypter } from '../cryptography/encrypter'
-import { HashComparer } from '../cryptography/hash-comparer'
-import { UserRepository } from '../repositories/user-repository'
+import { Encrypter } from "../cryptography/encrypter"
+import { HashComparer } from "../cryptography/hash-comparer"
+import { UserRepository } from "../repositories/user-repository"
 
 export interface AuthenticateUserUseCaseRequest {
   cpf: string
@@ -20,7 +20,7 @@ export class AuthenticateUserUseCase {
     const user = await this.userRepository.findByCPF(cpf)
 
     if (!user) {
-      return bad({ code: 'INVALID_CREDENTIALS' })
+      return bad({ code: "INVALID_CREDENTIALS" })
     }
 
     const isPasswordValid = await this.hashComparer.compare(
@@ -29,7 +29,7 @@ export class AuthenticateUserUseCase {
     )
 
     if (!isPasswordValid) {
-      return bad({ code: 'INVALID_CREDENTIALS' })
+      return bad({ code: "INVALID_CREDENTIALS" })
     }
 
     const token = await this.encrypter.encrypt({

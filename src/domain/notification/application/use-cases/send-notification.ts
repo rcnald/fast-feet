@@ -1,8 +1,8 @@
-import { nice } from '@/core/error'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { nice } from "@/core/error"
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 
-import { Notification } from '../../enterprise/entities/notification'
-import { NotificationRepository } from '../repositories/notification-repository'
+import { Notification } from "../../enterprise/entities/notification"
+import { NotificationRepository } from "../repositories/notification-repository"
 
 export interface SendNotificationUseCaseRequest {
   recipientId: string
@@ -33,5 +33,5 @@ export class SendNotificationUseCase {
 }
 
 export type SendNotificationUseCaseResponse = Awaited<
-  ReturnType<SendNotificationUseCase['execute']>
+  ReturnType<SendNotificationUseCase["execute"]>
 >

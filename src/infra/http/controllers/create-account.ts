@@ -4,12 +4,12 @@ import {
   Controller,
   HttpCode,
   Post,
-} from '@nestjs/common'
-import { z } from 'zod'
+} from "@nestjs/common"
+import { z } from "zod"
 
-import { RegisterDeliveryPersonUseCase } from '@/domain/delivery/application/use-cases/register-delivery-person'
+import { RegisterDeliveryPersonUseCase } from "@/domain/delivery/application/use-cases/register-delivery-person"
 
-import { ZodValidationPipe } from '../pipes/zod-validate.pipe'
+import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -21,7 +21,7 @@ const bodyValidationPipe = new ZodValidationPipe(createAccountBodySchema)
 
 type CreateAccountBody = z.infer<typeof createAccountBodySchema>
 
-@Controller('/accounts')
+@Controller("/accounts")
 export class CreateAccountController {
   constructor(private registerDeliveryPerson: RegisterDeliveryPersonUseCase) {}
 
@@ -36,8 +36,8 @@ export class CreateAccountController {
       password,
     })
 
-    if (error?.code === 'RESOURCE_ALREADY_EXISTS') {
-      throw new ConflictException('User already exists!')
+    if (error?.code === "RESOURCE_ALREADY_EXISTS") {
+      throw new ConflictException("User already exists!")
     }
   }
 }

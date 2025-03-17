@@ -1,7 +1,7 @@
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 
-import { AggregateRoot } from '../entities/aggregate-root'
-import { DomainEvent } from './domain-event'
+import { AggregateRoot } from "../entities/aggregate-root"
+import { DomainEvent } from "./domain-event"
 
 type DomainEventCallback = (event: any) => void
 

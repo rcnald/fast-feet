@@ -1,18 +1,18 @@
-import { makeDelivery } from 'test/factories/make-delivery'
-import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
-import { InMemoryPackageRepository } from 'test/in-memory-repositories/in-memory-package-repository'
+import { makeDelivery } from "test/factories/make-delivery"
+import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { InMemoryPackageRepository } from "test/in-memory-repositories/in-memory-package-repository"
 
-import { InMemoryDeliveryRepository } from '@/../test/in-memory-repositories/in-memory-delivery-repository'
+import { InMemoryDeliveryRepository } from "@/../test/in-memory-repositories/in-memory-delivery-repository"
 
-import { Geocoder } from '../geolocation/geocoder'
-import { CreateDeliveryUseCase } from './create-delivery'
+import { Geocoder } from "../geolocation/geocoder"
+import { CreateDeliveryUseCase } from "./create-delivery"
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryPackageRepository: InMemoryPackageRepository
 let fakeGeocoder: Geocoder
 let sut: CreateDeliveryUseCase
 
-describe('Post Package', () => {
+describe("Post Package", () => {
   beforeEach(() => {
     fakeGeocoder = new FakeGeocoder()
     inMemoryPackageRepository = new InMemoryPackageRepository()
@@ -23,9 +23,9 @@ describe('Post Package', () => {
     sut = new CreateDeliveryUseCase(inMemoryDeliveryRepository)
   })
 
-  it('should be able to post a package', async () => {
+  it("should be able to post a package", async () => {
     const [error, result] = await sut.execute({
-      packageId: 'package-id-1',
+      packageId: "package-id-1",
     })
 
     expect(error).toEqual(undefined)
@@ -36,7 +36,7 @@ describe('Post Package', () => {
     )
   })
 
-  it('should not be able to post a package that was previous posted', async () => {
+  it("should not be able to post a package that was previous posted", async () => {
     const delivery = makeDelivery({ packagePostedAt: new Date() })
 
     inMemoryDeliveryRepository.create(delivery)
@@ -46,7 +46,7 @@ describe('Post Package', () => {
     })
 
     expect(error).toEqual({
-      code: 'RESOURCE_ALREADY_EXISTS',
+      code: "RESOURCE_ALREADY_EXISTS",
     })
   })
 })

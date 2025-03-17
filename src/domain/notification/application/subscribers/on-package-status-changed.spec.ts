@@ -1,23 +1,23 @@
-import { FakeGeocoder } from 'test/geolocation/fake-geocoder'
-import { InMemoryDeliveryRepository } from 'test/in-memory-repositories/in-memory-delivery-repository'
-import { InMemoryNotificationRepository } from 'test/in-memory-repositories/in-memory-notification-repository'
-import { InMemoryPackageRepository } from 'test/in-memory-repositories/in-memory-package-repository'
-import { InMemoryRecipientRepository } from 'test/in-memory-repositories/in-memory-recipient-repository'
-import { MockInstance } from 'vitest'
+import { FakeGeocoder } from "test/geolocation/fake-geocoder"
+import { InMemoryDeliveryRepository } from "test/in-memory-repositories/in-memory-delivery-repository"
+import { InMemoryNotificationRepository } from "test/in-memory-repositories/in-memory-notification-repository"
+import { InMemoryPackageRepository } from "test/in-memory-repositories/in-memory-package-repository"
+import { InMemoryRecipientRepository } from "test/in-memory-repositories/in-memory-recipient-repository"
+import { MockInstance } from "vitest"
 
-import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
-import { Package } from '@/domain/delivery/enterprise/entities/package'
-import { Recipient } from '@/domain/delivery/enterprise/entities/recipient'
-import { Address } from '@/domain/delivery/enterprise/entities/value-objects/address'
-import { UniqueId } from '@/domain/delivery/enterprise/entities/value-objects/unique-id'
-import { waitFor } from '@/utils/wait-for'
+import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
+import { Package } from "@/domain/delivery/enterprise/entities/package"
+import { Recipient } from "@/domain/delivery/enterprise/entities/recipient"
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
+import { waitFor } from "@/utils/wait-for"
 
 import {
   SendNotificationUseCase,
   SendNotificationUseCaseRequest,
   SendNotificationUseCaseResponse,
-} from '../use-cases/send-notification'
-import { OnPackageStatusChanged } from './on-package-status-changed'
+} from "../use-cases/send-notification"
+import { OnPackageStatusChanged } from "./on-package-status-changed"
 
 let inMemoryPackageRepository: InMemoryPackageRepository
 let inMemoryRecipientRepository: InMemoryRecipientRepository
@@ -32,7 +32,7 @@ let sendNotificationExecuteSpy: MockInstance<
   ) => Promise<SendNotificationUseCaseResponse>
 >
 
-describe('On Package Status Changed', () => {
+describe("On Package Status Changed", () => {
   beforeEach(() => {
     inMemoryPackageRepository = new InMemoryPackageRepository()
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
@@ -47,7 +47,7 @@ describe('On Package Status Changed', () => {
       inMemoryNotificationRepository,
     )
 
-    sendNotificationExecuteSpy = vi.spyOn(sendNotificationUseCase, 'execute')
+    sendNotificationExecuteSpy = vi.spyOn(sendNotificationUseCase, "execute")
 
     new OnPackageStatusChanged(
       sendNotificationUseCase,
@@ -55,25 +55,25 @@ describe('On Package Status Changed', () => {
     )
   })
 
-  it('should send a notification when delivery package status has changed', async () => {
+  it("should send a notification when delivery package status has changed", async () => {
     const recipient = Recipient.create(
-      { name: 'John Doe' },
-      new UniqueId('recipient-id-1'),
+      { name: "John Doe" },
+      new UniqueId("recipient-id-1"),
     )
 
     const pack = Package.create(
       {
         recipientId: recipient.id,
         deliveryAddress: new Address({
-          city: 'Sao Paulo',
-          state: 'SP',
-          street: 'Rua da avenida',
-          neighborhood: 'Bairro da esquina',
-          number: '13A',
-          zipCode: '73674289',
+          city: "Sao Paulo",
+          state: "SP",
+          street: "Rua da avenida",
+          neighborhood: "Bairro da esquina",
+          number: "13A",
+          zipCode: "73674289",
         }),
       },
-      new UniqueId('package-id-1'),
+      new UniqueId("package-id-1"),
     )
 
     const delivery = Delivery.create(
@@ -81,7 +81,7 @@ describe('On Package Status Changed', () => {
         packageId: pack.id,
         packagePostedAt: new Date(),
       },
-      new UniqueId('delivery-id-1'),
+      new UniqueId("delivery-id-1"),
     )
 
     inMemoryRecipientRepository.create(recipient)

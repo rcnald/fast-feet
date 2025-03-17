@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common'
+import { Module } from "@nestjs/common"
 
-import { DeliveryPersonRepository } from '@/domain/delivery/application/repositories/delivery-person-repository'
+import { DeliveryPersonRepository } from "@/domain/delivery/application/repositories/delivery-person-repository"
 
-import { PrismaService } from './prisma/prisma.service'
-import { PrismaDeliveryPersonRepository } from './prisma/repositories/prisma-delivery-person-repository'
+import { PrismaService } from "./prisma/prisma.service"
+import { PrismaDeliveryPersonRepository } from "./prisma/repositories/prisma-delivery-person-repository"
 
 @Module({
   providers: [

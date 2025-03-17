@@ -1,8 +1,8 @@
-import { Entity } from '@/core/entities/entity'
-import { Optional } from '@/core/types/optional'
+import { Entity } from "@/core/entities/entity"
+import { Optional } from "@/core/types/optional"
 
-import { Address } from './value-objects/address'
-import { UniqueId } from './value-objects/unique-id'
+import { Address } from "./value-objects/address"
+import { UniqueId } from "./value-objects/unique-id"
 
 export interface PackageProps {
   recipientId: UniqueId
@@ -36,7 +36,7 @@ export class Package extends Entity<PackageProps> {
     this.props.createdAt = date
   }
 
-  static create(props: Optional<PackageProps, 'createdAt'>, id?: UniqueId) {
+  static create(props: Optional<PackageProps, "createdAt">, id?: UniqueId) {
     return new Package(
       {
         ...props,
