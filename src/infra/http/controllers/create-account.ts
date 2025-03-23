@@ -8,6 +8,7 @@ import {
 import { z } from "zod"
 
 import { RegisterDeliveryPersonUseCase } from "@/domain/delivery/application/use-cases/register-delivery-person"
+import { Public } from "@/infra/auth/public"
 
 import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
@@ -21,6 +22,7 @@ const bodyValidationPipe = new ZodValidationPipe(createAccountBodySchema)
 
 type CreateAccountBody = z.infer<typeof createAccountBodySchema>
 
+@Public()
 @Controller("/accounts")
 export class CreateAccountController {
   constructor(private registerDeliveryPerson: RegisterDeliveryPersonUseCase) {}

@@ -9,6 +9,7 @@ import {
 import { z } from "zod"
 
 import { AuthenticateUserUseCase } from "@/domain/delivery/application/use-cases/authenticate"
+import { Public } from "@/infra/auth/public"
 
 import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
@@ -21,12 +22,12 @@ const bodyValidationPipe = new ZodValidationPipe(AuthenticateBodySchema)
 
 type AuthenticateBody = z.infer<typeof AuthenticateBodySchema>
 
+@Public()
 @Controller("/sessions")
 export class AuthenticateController {
   constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
-  @HttpCode(200)
   async handle(@Body(bodyValidationPipe) body: AuthenticateBody) {
     const { cpf, password } = body
 

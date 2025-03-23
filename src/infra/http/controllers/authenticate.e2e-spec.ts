@@ -39,7 +39,7 @@ describe("Create account (E2E)", () => {
       password: "password",
     })
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.body).toEqual(
       expect.objectContaining({
         token: expect.any(String),
