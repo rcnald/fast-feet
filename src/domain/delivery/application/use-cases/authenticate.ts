@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common"
+
 import { bad, nice } from "@/core/error"
 
 import { Encrypter } from "../cryptography/encrypter"
@@ -9,6 +11,7 @@ export interface AuthenticateUserUseCaseRequest {
   password: string
 }
 
+@Injectable()
 export class AuthenticateUserUseCase {
   constructor(
     private userRepository: UserRepository,

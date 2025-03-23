@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common"
 import { DeliveryPersonRepository } from "@/domain/delivery/application/repositories/delivery-person-repository"
 import { DeliveryPerson } from "@/domain/delivery/enterprise/entities/delivery-person"
 
-import { PrismaDeliveryPersonMapper } from "../mappers/prisma-delivery-person-mapper"
+import { PrismaUserMapper } from "../mappers/prisma-user-mapper"
 import { PrismaService } from "../prisma.service"
 
 @Injectable()
@@ -13,7 +13,7 @@ export class PrismaDeliveryPersonRepository
   constructor(private prisma: PrismaService) {}
 
   async create(deliveryPerson: DeliveryPerson): Promise<void> {
-    const data = PrismaDeliveryPersonMapper.toPrisma(deliveryPerson)
+    const data = PrismaUserMapper.toPrisma(deliveryPerson)
 
     await this.prisma.user.create({
       data,
@@ -29,6 +29,10 @@ export class PrismaDeliveryPersonRepository
 
     if (!deliveryPerson) return null
 
-    return PrismaDeliveryPersonMapper.toDomain(deliveryPerson)
+    const domainDeliveryPerson = PrismaUserMapper.toDomain(deliveryPerson)
+
+    if (domainDeliveryPerson.role === "ADMIN") return null
+
+    return domainDeliveryPerson
   }
 }

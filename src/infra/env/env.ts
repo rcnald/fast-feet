@@ -3,6 +3,8 @@ import { fromZodError } from "zod-validation-error"
 
 export const envSchema = z.object({
   DATABASE_URL: z.string().url(),
+  PRIVATE_KEY: z.string(),
+  PUBLIC_KEY: z.string(),
   PORT: z.coerce.number().default(3000),
 })
 

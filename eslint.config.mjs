@@ -1,4 +1,4 @@
-import config from '@rcnald/eslint-config/node.js'
+import config from '@rcnald/eslint-config/node'
 import globals from 'globals'
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 
