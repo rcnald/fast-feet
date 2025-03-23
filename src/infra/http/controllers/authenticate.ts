@@ -26,6 +26,7 @@ export class AuthenticateController {
   constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
+  @HttpCode(200)
   async handle(@Body(bodyValidationPipe) body: AuthenticateBody) {
     const { cpf, password } = body
 
