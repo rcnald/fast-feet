@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -38,8 +39,12 @@ export class CreateAccountController {
       password,
     })
 
-    if (error?.code === "RESOURCE_ALREADY_EXISTS") {
-      throw new ConflictException("User already exists!")
+    if (error) {
+      if (error.code === "RESOURCE_ALREADY_EXISTS") {
+        throw new ConflictException("User already exists!")
+      }
+
+      throw new BadRequestException()
     }
   }
 }

@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common"
+
 import { nice } from "@/core/error"
 import { Recipient } from "@/domain/delivery/enterprise/entities/recipient"
 
@@ -7,6 +9,7 @@ export interface RegisterRecipientUseCaseRequest {
   name: string
 }
 
+@Injectable()
 export class RegisterRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
 

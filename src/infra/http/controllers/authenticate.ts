@@ -1,8 +1,7 @@
 import {
+  BadRequestException,
   Body,
   Controller,
-  HttpCode,
-  InternalServerErrorException,
   NotFoundException,
   Post,
 } from "@nestjs/common"
@@ -41,7 +40,7 @@ export class AuthenticateController {
         throw new NotFoundException("Invalid credentials!")
       }
 
-      throw new InternalServerErrorException()
+      throw new BadRequestException()
     }
 
     return { token: result.token }

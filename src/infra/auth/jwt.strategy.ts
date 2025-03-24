@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common"
 import { PassportStrategy } from "@nestjs/passport"
+import { ROLE } from "@prisma/client"
 import { ExtractJwt, Strategy } from "passport-jwt"
 import { z } from "zod"
 
@@ -7,6 +8,7 @@ import { EnvService } from "../env/env.service"
 
 const tokenPayloadSchema = z.object({
   sub: z.string().uuid(),
+  role: z.nativeEnum(ROLE),
 })
 
 export type UserPayload = z.infer<typeof tokenPayloadSchema>

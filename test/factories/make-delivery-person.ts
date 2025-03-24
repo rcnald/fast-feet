@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common"
+import { JwtService } from "@nestjs/jwt"
 import { randomUUID } from "crypto"
 
 import {
@@ -28,7 +29,10 @@ export function makeDeliveryPerson(
 
 @Injectable()
 export class DeliveryPersonFactory {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   async makePrismaDeliveryPerson(
     override: Partial<DeliveryPersonProps> = {},
@@ -41,5 +45,19 @@ export class DeliveryPersonFactory {
     })
 
     return prismaDeliveryPerson
+  }
+
+  async makeAndAuthenticatePrismaDeliveryPerson(
+    override: Partial<DeliveryPersonProps> = {},
+    id?: UniqueId,
+  ) {
+    const deliveryPerson = await this.makePrismaDeliveryPerson(override, id)
+
+    const token = await this.jwtService.signAsync({
+      sub: deliveryPerson.id.toString(),
+      role: deliveryPerson.role,
+    })
+
+    return { deliveryPerson, token }
   }
 }
