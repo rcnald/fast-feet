@@ -1,16 +1,7 @@
-import {
-  BadRequestException,
-  Body,
-  ConflictException,
-  Controller,
-  HttpCode,
-  Post,
-} from "@nestjs/common"
+import { Body, Controller, HttpCode, Post } from "@nestjs/common"
 import { z } from "zod"
 
-import { RegisterDeliveryPersonUseCase } from "@/domain/delivery/application/use-cases/register-delivery-person"
 import { RegisterRecipientUseCase } from "@/domain/delivery/application/use-cases/register-recipient"
-import { Public } from "@/infra/auth/public"
 
 import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 

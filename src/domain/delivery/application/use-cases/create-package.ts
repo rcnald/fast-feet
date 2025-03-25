@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common"
+
 import { nice } from "@/core/error"
 import { Package } from "@/domain/delivery/enterprise/entities/package"
 import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
@@ -17,6 +19,7 @@ export interface CreatePackageUseCaseRequest {
   }
 }
 
+@Injectable()
 export class CreatePackageUseCase {
   constructor(private packageRepository: PackageRepository) {}
 

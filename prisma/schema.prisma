@@ -50,7 +50,7 @@ model Package {
   state        String
   neighborhood String
   number       String
-  zipCode      Int    @map("zip_code")
+  zipCode      String @map("zip_code")
 
   createdAt DateTime @map("created_at")
 
