@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common"
 
 import { AuthenticateUserUseCase } from "@/domain/delivery/application/use-cases/authenticate"
+import { CreateDeliveryUseCase } from "@/domain/delivery/application/use-cases/create-delivery"
 import { CreatePackageUseCase } from "@/domain/delivery/application/use-cases/create-package"
 import { RegisterDeliveryPersonUseCase } from "@/domain/delivery/application/use-cases/register-delivery-person"
 import { RegisterRecipientUseCase } from "@/domain/delivery/application/use-cases/register-recipient"
@@ -9,6 +10,7 @@ import { CryptographyModule } from "../cryptography/cryptography.module"
 import { DatabaseModule } from "../database/database.module"
 import { AuthenticateController } from "./controllers/authenticate"
 import { CreateAccountController } from "./controllers/create-account"
+import { CreateDeliveryController } from "./controllers/create-delivery"
 import { CreatePackageController } from "./controllers/create-package"
 import { RegisterRecipientController } from "./controllers/register-recipient"
 
@@ -19,12 +21,14 @@ import { RegisterRecipientController } from "./controllers/register-recipient"
     AuthenticateController,
     RegisterRecipientController,
     CreatePackageController,
+    CreateDeliveryController,
   ],
   providers: [
     RegisterDeliveryPersonUseCase,
     AuthenticateUserUseCase,
     RegisterRecipientUseCase,
     CreatePackageUseCase,
+    CreateDeliveryUseCase,
   ],
 })
 export class HTTPModule {}

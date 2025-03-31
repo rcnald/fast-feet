@@ -61,9 +61,9 @@ model Package {
 }
 
 model Delivery {
-  id               String @id @default(uuid())
-  packageId        String @map("package_id")
-  deliveryPersonId String @map("delivery_person_id")
+  id               String  @id @default(uuid())
+  packageId        String  @map("package_id")
+  deliveryPersonId String? @map("delivery_person_id")
 
   createdAt DateTime @map("created_at")
 
@@ -72,7 +72,7 @@ model Delivery {
   packageDeliveredAt DateTime? @map("package_delivered_at")
   packageReturnedAt  DateTime? @map("package_returned_at")
 
-  deliveryPerson User    @relation(fields: [deliveryPersonId], references: [id])
+  deliveryPerson User?   @relation(fields: [deliveryPersonId], references: [id])
   package        Package @relation(fields: [packageId], references: [id])
 
   @@map("deliveries")

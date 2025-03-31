@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common"
+
 import { bad, nice } from "@/core/error"
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
@@ -8,6 +10,7 @@ export interface CreateDeliveryUseCaseRequest {
   packageId: string
 }
 
+@Injectable()
 export class CreateDeliveryUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 
