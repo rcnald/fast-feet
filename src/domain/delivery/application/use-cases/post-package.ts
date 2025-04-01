@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common"
+
 import { bad, nice } from "@/core/error"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
@@ -6,6 +8,7 @@ export interface PostPackageUseCaseRequest {
   deliveryId: string
 }
 
+@Injectable()
 export class PostPackageUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 

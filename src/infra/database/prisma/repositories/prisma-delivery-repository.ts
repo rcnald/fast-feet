@@ -45,7 +45,7 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
   async save(delivery: Delivery): Promise<void> {
     const data = PrismaDeliveryMapper.toPrisma(delivery)
 
-    await this.prisma.package.update({
+    await this.prisma.delivery.update({
       where: {
         id: delivery.id.toString(),
       },
