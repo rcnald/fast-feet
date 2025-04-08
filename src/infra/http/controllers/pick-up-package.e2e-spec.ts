@@ -10,7 +10,7 @@ import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/un
 import { AppModule } from "@/infra/app.module"
 import { DatabaseModule } from "@/infra/database/database.module"
 
-describe("Post package (E2E)", () => {
+describe("Pick up package (E2E)", () => {
   let app: INestApplication
   let packageFactory: PackageFactory
   let deliveryPersonFactory: DeliveryPersonFactory
@@ -42,7 +42,7 @@ describe("Post package (E2E)", () => {
     await app.close()
   })
 
-  test("[POST] /deliveries/:id/post", async () => {
+  test("[PATCH] /deliveries/:id/pick-up", async () => {
     const { token } =
       await deliveryPersonFactory.makeAndAuthenticatePrismaDeliveryPerson()
     const recipient = await recipientFactory.makePrismaRecipient()
@@ -52,12 +52,13 @@ describe("Post package (E2E)", () => {
 
     const delivery = await deliveryFactory.makePrismaDelivery({
       packageId: new UniqueId(pack.id),
+      packagePostedAt: new Date()
     })
 
     const response = await request(app.getHttpServer())
-      .patch(`/deliveries/${delivery.id}/post`)
+      .patch(`/deliveries/${delivery.id}/pick-up`)
       .set("Authorization", `Bearer ${token}`)
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(204)
   })
 })

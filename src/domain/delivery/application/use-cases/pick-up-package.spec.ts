@@ -57,7 +57,7 @@ describe("Pick Up Package", () => {
       deliveryPersonId: "delivery-person-id-2",
     })
 
-    expect(error).toEqual({ code: "ACCESS_DENIED" })
+    expect(error).toEqual({ code: "DELIVERY_ALREADY_PICKED_UP" })
   })
 
   it("should not be able to pick up a package that its not posted", async () => {

@@ -4,12 +4,11 @@ import {
   HttpCode,
   NotFoundException,
   Param,
-  Post,
+  Patch
 } from "@nestjs/common"
 import { z } from "zod"
 
 import { PostPackageUseCase } from "@/domain/delivery/application/use-cases/post-package"
-import { Public } from "@/infra/auth/public"
 
 import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
@@ -21,11 +20,11 @@ const paramsValidationPipe = new ZodValidationPipe(postPackageParamsSchema)
 
 type PostPackageParams = z.infer<typeof postPackageParamsSchema>
 
-@Controller("/deliveries/:id")
+@Controller("/deliveries/:id/post")
 export class PostPackageController {
   constructor(private postPackage: PostPackageUseCase) {}
 
-  @Post()
+  @Patch()
   @HttpCode(200)
   async handle(@Param(paramsValidationPipe) { id }: PostPackageParams) {
     const [error] = await this.postPackage.execute({
