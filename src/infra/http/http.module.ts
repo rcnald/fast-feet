@@ -17,6 +17,8 @@ import { PostPackageController } from "./controllers/post-package"
 import { RegisterRecipientController } from "./controllers/register-recipient"
 import { PickUpPackageController } from "./controllers/pick-up-package"
 import { PickUpPackageUseCase } from "@/domain/delivery/application/use-cases/pick-up-package"
+import { CompleteDeliveryController } from "./controllers/complete-delivery"
+import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases/complete-delivery"
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -28,6 +30,7 @@ import { PickUpPackageUseCase } from "@/domain/delivery/application/use-cases/pi
     CreateDeliveryController,
     PostPackageController,
     PickUpPackageController,
+    CompleteDeliveryController,
   ],
   providers: [
     RegisterDeliveryPersonUseCase,
@@ -36,7 +39,8 @@ import { PickUpPackageUseCase } from "@/domain/delivery/application/use-cases/pi
     CreatePackageUseCase,
     CreateDeliveryUseCase,
     PostPackageUseCase,
-    PickUpPackageUseCase
+    PickUpPackageUseCase,
+    CompleteDeliveryUseCase
   ],
 })
 export class HTTPModule {}

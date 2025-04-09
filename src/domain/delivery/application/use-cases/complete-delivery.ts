@@ -2,6 +2,7 @@ import { bad, nice } from "@/core/error"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { Injectable } from "@nestjs/common"
 
 export interface CompleteDeliveryUseCaseRequest {
   deliveryId: string
@@ -9,6 +10,7 @@ export interface CompleteDeliveryUseCaseRequest {
   attachmentId: string
 }
 
+@Injectable()
 export class CompleteDeliveryUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 
@@ -24,7 +26,7 @@ export class CompleteDeliveryUseCase {
     }
 
     if (delivery.deliveryPersonId?.toString() !== deliveryPersonId) {
-      return bad({ code: "ACCESS_DENIED" })
+      return bad({ code: "DELIVERY_ALREADY_PICKED_UP" })
     }
 
     if (delivery.status !== "picked_up") {
