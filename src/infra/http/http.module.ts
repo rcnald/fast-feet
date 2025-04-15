@@ -19,6 +19,8 @@ import { PickUpPackageController } from "./controllers/pick-up-package"
 import { PickUpPackageUseCase } from "@/domain/delivery/application/use-cases/pick-up-package"
 import { CompleteDeliveryController } from "./controllers/complete-delivery"
 import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases/complete-delivery"
+import { ReturnPackageController } from "./controllers/return-package"
+import { ReturnPackageUseCase } from "@/domain/delivery/application/use-cases/return-package"
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -31,6 +33,7 @@ import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases
     PostPackageController,
     PickUpPackageController,
     CompleteDeliveryController,
+    ReturnPackageController
   ],
   providers: [
     RegisterDeliveryPersonUseCase,
@@ -40,7 +43,8 @@ import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases
     CreateDeliveryUseCase,
     PostPackageUseCase,
     PickUpPackageUseCase,
-    CompleteDeliveryUseCase
+    CompleteDeliveryUseCase,
+    ReturnPackageUseCase
   ],
 })
 export class HTTPModule {}

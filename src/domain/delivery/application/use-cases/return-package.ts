@@ -1,11 +1,13 @@
 import { bad, nice } from "@/core/error"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { Injectable } from "@nestjs/common"
 
 export interface ReturnPackageUseCaseRequest {
   deliveryId: string
 }
 
+@Injectable()
 export class ReturnPackageUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 
