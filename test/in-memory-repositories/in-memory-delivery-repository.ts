@@ -82,7 +82,7 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
       .filter((delivery) => {
         if (!delivery) return false
 
-        const distance = getDistanceBetweenCoordinates(
+        const distanceInKilometers = getDistanceBetweenCoordinates(
           {
             latitude: deliveryPersonCoordinate.latitude,
             longitude: deliveryPersonCoordinate.longitude,
@@ -93,7 +93,7 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
           },
         )
 
-        return distance < 5
+        return distanceInKilometers < 5
       })
       .filter((delivery) => !!delivery)
       .map((delivery) => delivery.deliveryId)

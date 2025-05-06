@@ -5,6 +5,8 @@ export const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   PRIVATE_KEY: z.string(),
   PUBLIC_KEY: z.string(),
+  GOOGLE_GEOLOCATION_API_KEY: z.string(),
+  GOOGLE_GEOLOCATION_API_URL: z.string().url(),
   PORT: z.coerce.number().default(3000),
 })
 

@@ -12,8 +12,10 @@ import { PrismaDeliveryRepository } from "./prisma/repositories/prisma-delivery-
 import { PrismaPackageRepository } from "./prisma/repositories/prisma-package-repository"
 import { PrismaRecipientRepository } from "./prisma/repositories/prisma-recipient-repository"
 import { PrismaUserRepository } from "./prisma/repositories/prisma-user-repository"
+import { GeolocationModule } from "../geolocation/geolocation.module"
 
 @Module({
+  imports: [GeolocationModule],
   providers: [
     PrismaService,
     {

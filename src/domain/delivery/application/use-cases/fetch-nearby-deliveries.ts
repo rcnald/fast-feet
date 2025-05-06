@@ -1,6 +1,7 @@
 import { nice } from "@/core/error"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
+import { Injectable } from "@nestjs/common"
 
 export interface FetchNearbyDeliveriesUseCaseRequest {
   deliveryPersonLatitude: string
@@ -8,6 +9,7 @@ export interface FetchNearbyDeliveriesUseCaseRequest {
   deliveryPersonId: string
 }
 
+@Injectable()
 export class FetchNearbyDeliveriesUseCase {
   constructor(private deliveryRepository: DeliveryRepository) {}
 

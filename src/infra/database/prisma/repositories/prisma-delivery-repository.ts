@@ -5,10 +5,16 @@ import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
 
 import { PrismaDeliveryMapper } from "../mappers/prisma-delivery-mapper"
 import { PrismaService } from "../prisma.service"
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates"
 
 @Injectable()
 export class PrismaDeliveryRepository implements DeliveryRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private geocoder: Geocoder
+  ) { }
 
   async create(delivery: Delivery): Promise<void> {
     const data = PrismaDeliveryMapper.toPrisma(delivery)
@@ -57,7 +63,59 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
     deliveryPersonCoordinate: { latitude: number; longitude: number },
     deliveryPersonId: string,
   ): Promise<Delivery[]> {
-    throw new Error("Method not implemented.")
+    const deliveryPersonDeliveries = await this.prisma.delivery.findMany({
+      where: {
+        deliveryPersonId
+      },
+      include: {
+        package: true
+      }
+    })
+
+    const deliveriesWithCoordinates = await Promise.all(
+      deliveryPersonDeliveries.map(async (delivery) => {
+        const coordinate = await this.geocoder.geocode(
+          new Address(
+            {
+              city: delivery.package.city,
+              neighborhood: delivery.package.neighborhood,
+              number: delivery.package.number,
+              state: delivery.package.state,
+              street: delivery.package.street,
+              zipCode: delivery.package.zipCode
+            }).toValue(),
+        )
+
+        return {
+          deliveryId: delivery.id.toString(),
+          coordinate,
+        }
+      }))
+
+    const nearbyDeliveriesIds = deliveriesWithCoordinates
+      .filter((delivery) => {
+        const distanceInKilometers = getDistanceBetweenCoordinates(
+          {
+            latitude: deliveryPersonCoordinate.latitude,
+            longitude: deliveryPersonCoordinate.longitude,
+          },
+          {
+            latitude: delivery.coordinate.latitude,
+            longitude: delivery.coordinate.longitude,
+          },
+        )
+
+        return distanceInKilometers < 5
+      })
+      .map((delivery) => delivery.deliveryId)
+
+    const nearbyDeliveries = await Promise.all(
+      nearbyDeliveriesIds.map(async (deliveryId) => {
+        return await this.findById(deliveryId)
+      }),
+    )
+
+    return nearbyDeliveries.filter((delivery) => !!delivery)
   }
 
   async findManyByRecipientId(recipientId: string): Promise<Delivery[]> {

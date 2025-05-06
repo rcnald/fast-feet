@@ -21,9 +21,12 @@ import { CompleteDeliveryController } from "./controllers/complete-delivery"
 import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases/complete-delivery"
 import { ReturnPackageController } from "./controllers/return-package"
 import { ReturnPackageUseCase } from "@/domain/delivery/application/use-cases/return-package"
+import { GeolocationModule } from "../geolocation/geolocation.module"
+import { FetchNearbyDeliveriesController } from "./controllers/fetch-nearby-deliveries"
+import { FetchNearbyDeliveriesUseCase } from "@/domain/delivery/application/use-cases/fetch-nearby-deliveries"
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, GeolocationModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
@@ -33,7 +36,8 @@ import { ReturnPackageUseCase } from "@/domain/delivery/application/use-cases/re
     PostPackageController,
     PickUpPackageController,
     CompleteDeliveryController,
-    ReturnPackageController
+    ReturnPackageController,
+    FetchNearbyDeliveriesController
   ],
   providers: [
     RegisterDeliveryPersonUseCase,
@@ -44,7 +48,8 @@ import { ReturnPackageUseCase } from "@/domain/delivery/application/use-cases/re
     PostPackageUseCase,
     PickUpPackageUseCase,
     CompleteDeliveryUseCase,
-    ReturnPackageUseCase
+    ReturnPackageUseCase,
+    FetchNearbyDeliveriesUseCase
   ],
 })
 export class HTTPModule {}
