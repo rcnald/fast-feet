@@ -76,7 +76,7 @@ describe("Complete Delivery", () => {
     })
 
     expect(error).toEqual({
-      code: "ACCESS_DENIED",
+      code: "DELIVERY_ALREADY_PICKED_UP",
     })
   })
 
