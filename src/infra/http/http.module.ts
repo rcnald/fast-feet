@@ -10,10 +10,12 @@ import { PostPackageUseCase } from "@/domain/delivery/application/use-cases/post
 import { RegisterDeliveryPersonUseCase } from "@/domain/delivery/application/use-cases/register-delivery-person"
 import { RegisterRecipientUseCase } from "@/domain/delivery/application/use-cases/register-recipient"
 import { ReturnPackageUseCase } from "@/domain/delivery/application/use-cases/return-package"
+import { UploadAndCreateAttachmentUseCase } from "@/domain/delivery/application/use-cases/upload-and-create-attachment"
 
 import { CryptographyModule } from "../cryptography/cryptography.module"
 import { DatabaseModule } from "../database/database.module"
 import { GeolocationModule } from "../geolocation/geolocation.module"
+import { StorageModule } from "../storage/storage.module"
 import { AuthenticateController } from "./controllers/authenticate"
 import { CompleteDeliveryController } from "./controllers/complete-delivery"
 import { CreateAccountController } from "./controllers/create-account"
@@ -24,9 +26,15 @@ import { PickUpPackageController } from "./controllers/pick-up-package"
 import { PostPackageController } from "./controllers/post-package"
 import { RegisterRecipientController } from "./controllers/register-recipient"
 import { ReturnPackageController } from "./controllers/return-package"
+import { UploadAndCreateAttachmentController } from "./controllers/upload-and-create-attachment"
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, GeolocationModule],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    GeolocationModule,
+    StorageModule,
+  ],
   controllers: [
     CreateAccountController,
     AuthenticateController,
@@ -38,6 +46,7 @@ import { ReturnPackageController } from "./controllers/return-package"
     CompleteDeliveryController,
     ReturnPackageController,
     FetchNearbyDeliveriesController,
+    UploadAndCreateAttachmentController,
   ],
   providers: [
     RegisterDeliveryPersonUseCase,
@@ -50,6 +59,7 @@ import { ReturnPackageController } from "./controllers/return-package"
     CompleteDeliveryUseCase,
     ReturnPackageUseCase,
     FetchNearbyDeliveriesUseCase,
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HTTPModule {}

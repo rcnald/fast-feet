@@ -2,8 +2,8 @@ import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
 
 import { env } from "../env/env"
 
-const API_KEY = env.GOOGLE_GEOLOCATION_API_KEY
-const API_URL = env.GOOGLE_GEOLOCATION_API_URL
+const API_KEY = env.GEOLOCATION_API_KEY
+const API_URL = env.GEOLOCATION_API_URL
 
 export class GoogleGeocoder implements Geocoder {
   async geocode(

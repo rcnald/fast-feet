@@ -73,9 +73,6 @@ A aplicação estará disponível em: [http://localhost:3000](http://localhost:3
 
 - [x] A aplicação deve ter dois tipos de usuário: **entregador** e/ou **admin**
 - [x] Deve ser possível realizar login com CPF e senha
-- [ ] Deve ser possível realizar o CRUD dos entregadores
-- [ ] Deve ser possível realizar o CRUD das encomendas
-- [ ] Deve ser possível realizar o CRUD dos destinatários
 - [x] Deve ser possível marcar uma encomenda como **aguardando retirada**
 - [x] Deve ser possível retirar uma encomenda
 - [x] Deve ser possível marcar uma encomenda como **entregue**
@@ -88,9 +85,6 @@ A aplicação estará disponível em: [http://localhost:3000](http://localhost:3
 
 ## Regras de Negócio (RNs)
 
-- [ ] Somente usuários do tipo **admin** podem realizar operações de CRUD nas encomendas
-- [ ] Somente usuários do tipo **admin** podem realizar operações de CRUD dos entregadores
-- [ ] Somente usuários do tipo **admin** podem realizar operações de CRUD dos destinatários
 - [x] Para marcar uma encomenda como **entregue**, é obrigatório o envio de uma **foto**
 - [x] Somente o **entregador que retirou** a encomenda pode marcá-la como entregue
 - [ ] Somente o **admin** pode alterar a senha de um usuário

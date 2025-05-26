@@ -5,11 +5,16 @@ import { UniqueId } from "./value-objects/unique-id"
 export interface AttachmentProps {
   title: string
   url: string
+  deliveryId?: string
 }
 
 export class Attachment extends Entity<AttachmentProps> {
   get title() {
     return this.props.title
+  }
+
+  get deliveryId() {
+    return this.props.deliveryId
   }
 
   get url() {

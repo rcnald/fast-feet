@@ -6,14 +6,14 @@ import { Attachment } from "../../enterprise/entities/attachment"
 import { AttachmentRepository } from "../repositories/attachment-repository"
 import { Uploader } from "../storage/uploader"
 
-export interface UploadAndCreateAttachmentsUseCaseRequest {
+export interface UploadAndCreateAttachmentUseCaseRequest {
   fileName: string
   fileType: string
   body: Buffer
 }
 
 @Injectable()
-export class UploadAndCreateAttachmentsUseCase {
+export class UploadAndCreateAttachmentUseCase {
   constructor(
     private attachmentRepository: AttachmentRepository,
     private uploader: Uploader,
@@ -23,7 +23,7 @@ export class UploadAndCreateAttachmentsUseCase {
     fileName,
     fileType,
     body,
-  }: UploadAndCreateAttachmentsUseCaseRequest) {
+  }: UploadAndCreateAttachmentUseCaseRequest) {
     const isFileTypeValidRegex = /^(image\/(jpeg|png))$|^application\/pdf$/
 
     if (!isFileTypeValidRegex.test(fileType)) {

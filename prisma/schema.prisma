@@ -72,10 +72,23 @@ model Delivery {
   packageDeliveredAt DateTime? @map("package_delivered_at")
   packageReturnedAt  DateTime? @map("package_returned_at")
 
-  deliveryPerson User?   @relation(fields: [deliveryPersonId], references: [id])
-  package        Package @relation(fields: [packageId], references: [id])
+  deliveryPerson User?        @relation(fields: [deliveryPersonId], references: [id])
+  package        Package      @relation(fields: [packageId], references: [id])
+  Attachment     Attachment[]
 
   @@map("deliveries")
+}
+
+model Attachment {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  deliveryId String? @map("delivery_id")
+
+  delivery Delivery? @relation(fields: [deliveryId], references: [id])
+
+  @@map("attachments")
 }
 
 model Notification {
