@@ -1,20 +1,20 @@
 import { Injectable } from "@nestjs/common"
 
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
 import { DeliveryRepository } from "@/domain/delivery/application/repositories/delivery-repository"
 import { Delivery } from "@/domain/delivery/enterprise/entities/delivery"
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
+import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates"
 
 import { PrismaDeliveryMapper } from "../mappers/prisma-delivery-mapper"
 import { PrismaService } from "../prisma.service"
-import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
-import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
-import { getDistanceBetweenCoordinates } from "@/utils/getDistanceBetweenCoordinates"
 
 @Injectable()
 export class PrismaDeliveryRepository implements DeliveryRepository {
   constructor(
     private prisma: PrismaService,
-    private geocoder: Geocoder
-  ) { }
+    private geocoder: Geocoder,
+  ) {}
 
   async create(delivery: Delivery): Promise<void> {
     const data = PrismaDeliveryMapper.toPrisma(delivery)
@@ -65,32 +65,32 @@ export class PrismaDeliveryRepository implements DeliveryRepository {
   ): Promise<Delivery[]> {
     const deliveryPersonDeliveries = await this.prisma.delivery.findMany({
       where: {
-        deliveryPersonId
+        deliveryPersonId,
       },
       include: {
-        package: true
-      }
+        package: true,
+      },
     })
 
     const deliveriesWithCoordinates = await Promise.all(
       deliveryPersonDeliveries.map(async (delivery) => {
         const coordinate = await this.geocoder.geocode(
-          new Address(
-            {
-              city: delivery.package.city,
-              neighborhood: delivery.package.neighborhood,
-              number: delivery.package.number,
-              state: delivery.package.state,
-              street: delivery.package.street,
-              zipCode: delivery.package.zipCode
-            }).toValue(),
+          new Address({
+            city: delivery.package.city,
+            neighborhood: delivery.package.neighborhood,
+            number: delivery.package.number,
+            state: delivery.package.state,
+            street: delivery.package.street,
+            zipCode: delivery.package.zipCode,
+          }).toValue(),
         )
 
         return {
           deliveryId: delivery.id.toString(),
           coordinate,
         }
-      }))
+      }),
+    )
 
     const nearbyDeliveriesIds = deliveriesWithCoordinates
       .filter((delivery) => {

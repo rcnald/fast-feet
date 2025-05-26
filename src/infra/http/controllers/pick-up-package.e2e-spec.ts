@@ -52,7 +52,7 @@ describe("Pick up package (E2E)", () => {
 
     const delivery = await deliveryFactory.makePrismaDelivery({
       packageId: new UniqueId(pack.id),
-      packagePostedAt: new Date()
+      packagePostedAt: new Date(),
     })
 
     const response = await request(app.getHttpServer())

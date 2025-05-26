@@ -1,4 +1,5 @@
 import { Entity } from "@/core/entities/entity"
+
 import { UniqueId } from "./value-objects/unique-id"
 
 export interface AttachmentProps {

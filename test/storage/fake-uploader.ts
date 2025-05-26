@@ -1,5 +1,9 @@
-import { Uploader, UploaderParams } from "@/domain/delivery/application/storage/uploader";
-import { randomUUID } from "crypto";
+import { randomUUID } from "crypto"
+
+import {
+  Uploader,
+  UploaderParams,
+} from "@/domain/delivery/application/storage/uploader"
 
 interface Upload {
   fileName: string
@@ -7,17 +11,16 @@ interface Upload {
 }
 
 export class FakeUploader implements Uploader {
-  private uploads: Upload[]  = []
+  private uploads: Upload[] = []
 
-  async upload({fileName}: UploaderParams): Promise<{ url: string; }> {
+  async upload({ fileName }: UploaderParams): Promise<{ url: string }> {
     const url = randomUUID()
 
     this.uploads.push({
       fileName,
-      url
+      url,
     })
 
     return { url }
   }
-
 }

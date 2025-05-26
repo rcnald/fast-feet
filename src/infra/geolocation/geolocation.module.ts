@@ -1,6 +1,8 @@
-import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder";
 import { Module } from "@nestjs/common"
-import { GoogleGeocoder } from "./geocoder";
+
+import { Geocoder } from "@/domain/delivery/application/geolocation/geocoder"
+
+import { GoogleGeocoder } from "./geocoder"
 
 @Module({
   providers: [

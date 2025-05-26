@@ -1,10 +1,10 @@
+import { Injectable } from "@nestjs/common"
+
 import { bad, nice } from "@/core/error"
 
-import { DeliveryRepository } from "../repositories/delivery-repository"
-import { Injectable } from "@nestjs/common"
-import { AttachmentsRepository } from "../repositories/attachment-repository"
-import { Uploader } from "../storage/uploader"
 import { Attachment } from "../../enterprise/entities/attachment"
+import { AttachmentRepository } from "../repositories/attachment-repository"
+import { Uploader } from "../storage/uploader"
 
 export interface UploadAndCreateAttachmentsUseCaseRequest {
   fileName: string
@@ -14,20 +14,27 @@ export interface UploadAndCreateAttachmentsUseCaseRequest {
 
 @Injectable()
 export class UploadAndCreateAttachmentsUseCase {
-  constructor(private attachmentRepository: AttachmentsRepository, private uploader: Uploader) {}
+  constructor(
+    private attachmentRepository: AttachmentRepository,
+    private uploader: Uploader,
+  ) {}
 
-  async execute({ fileName, fileType, body }: UploadAndCreateAttachmentsUseCaseRequest) {
+  async execute({
+    fileName,
+    fileType,
+    body,
+  }: UploadAndCreateAttachmentsUseCaseRequest) {
     const isFileTypeValidRegex = /^(image\/(jpeg|png))$|^application\/pdf$/
 
     if (!isFileTypeValidRegex.test(fileType)) {
-      return bad({code: "INVALID_FILE_TYPE"})
+      return bad({ code: "INVALID_FILE_TYPE" })
     }
 
-    const { url } = await this.uploader.upload({fileName,fileType,body})
+    const { url } = await this.uploader.upload({ fileName, fileType, body })
 
     const attachment = Attachment.create({
-      title: fileName, 
-      url
+      title: fileName,
+      url,
     })
 
     await this.attachmentRepository.create(attachment)

@@ -6,16 +6,15 @@ import {
   NotFoundException,
   Param,
   Patch,
-  Post,
 } from "@nestjs/common"
 import { z } from "zod"
 
 import { CompleteDeliveryUseCase } from "@/domain/delivery/application/use-cases/complete-delivery"
-
-import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
+import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { CurrentUser } from "@/infra/auth/current-user"
 import { UserPayload } from "@/infra/auth/jwt.strategy"
-import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
+
+import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
 const completeDeliveryParamsSchema = z.object({
   id: z.string().uuid(),
@@ -32,16 +31,16 @@ export class CompleteDeliveryController {
   @Patch()
   @HttpCode(204)
   async handle(
-    @CurrentUser() user : UserPayload,
-    @Param(paramsValidationPipe) { id }: CompleteDeliveryParams
+    @CurrentUser() user: UserPayload,
+    @Param(paramsValidationPipe) { id }: CompleteDeliveryParams,
   ) {
-
-    if(user.role === "ADMIN") throw new ForbiddenException('Admin are not allowed to pick up packages!')
+    if (user.role === "ADMIN")
+      throw new ForbiddenException("Admin are not allowed to pick up packages!")
 
     const [error] = await this.completeDelivery.execute({
       deliveryId: id,
       deliveryPersonId: user.sub,
-      attachmentId: new UniqueId().toString()
+      attachmentId: new UniqueId().toString(),
     })
 
     if (error) {

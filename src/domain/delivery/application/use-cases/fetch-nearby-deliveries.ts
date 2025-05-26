@@ -1,7 +1,8 @@
+import { Injectable } from "@nestjs/common"
+
 import { nice } from "@/core/error"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
-import { Injectable } from "@nestjs/common"
 
 export interface FetchNearbyDeliveriesUseCaseRequest {
   deliveryPersonLatitude: string

@@ -1,15 +1,14 @@
 import { INestApplication } from "@nestjs/common"
 import { Test } from "@nestjs/testing"
 import request from "supertest"
+import { AdminFactory } from "test/factories/make-admin"
 import { DeliveryFactory } from "test/factories/make-delivery"
-import { DeliveryPersonFactory } from "test/factories/make-delivery-person"
 import { PackageFactory } from "test/factories/make-package"
 import { RecipientFactory } from "test/factories/make-recipient"
 
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { AppModule } from "@/infra/app.module"
 import { DatabaseModule } from "@/infra/database/database.module"
-import { AdminFactory } from "test/factories/make-admin"
 
 describe("Return package (E2E)", () => {
   let app: INestApplication
@@ -44,8 +43,7 @@ describe("Return package (E2E)", () => {
   })
 
   test("[PATCH] /deliveries/:id/return", async () => {
-    const { token, admin } =
-      await adminFactory.makeAndAuthenticatePrismaAdmin()
+    const { token, admin } = await adminFactory.makeAndAuthenticatePrismaAdmin()
     const recipient = await recipientFactory.makePrismaRecipient()
     const pack = await packageFactory.makePrismaPackage({
       recipientId: new UniqueId(recipient.id),
@@ -54,7 +52,7 @@ describe("Return package (E2E)", () => {
     const delivery = await deliveryFactory.makePrismaDelivery({
       packageId: new UniqueId(pack.id),
       packageDeliveredAt: new Date(),
-      deliveryPersonId: new UniqueId(admin.id)
+      deliveryPersonId: new UniqueId(admin.id),
     })
 
     const response = await request(app.getHttpServer())

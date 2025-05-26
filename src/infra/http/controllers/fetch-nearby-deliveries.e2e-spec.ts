@@ -6,10 +6,10 @@ import { DeliveryPersonFactory } from "test/factories/make-delivery-person"
 import { PackageFactory } from "test/factories/make-package"
 import { RecipientFactory } from "test/factories/make-recipient"
 
+import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 import { AppModule } from "@/infra/app.module"
 import { DatabaseModule } from "@/infra/database/database.module"
-import { Address } from "@/domain/delivery/enterprise/entities/value-objects/address"
 
 describe("Fetch nearby deliveries (E2E)", () => {
   let app: INestApplication
@@ -59,8 +59,8 @@ describe("Fetch nearby deliveries (E2E)", () => {
         number: "218",
         state: "SP",
         street: "Rua André Dreifus",
-        zipCode: "01252010"
-      })
+        zipCode: "01252010",
+      }),
     })
 
     const packNearbyTwo = await packageFactory.makePrismaPackage({
@@ -71,14 +71,14 @@ describe("Fetch nearby deliveries (E2E)", () => {
         number: "198 ",
         state: "SP",
         street: "Rua Zaíra",
-        zipCode: "01252060"
-      })
+        zipCode: "01252060",
+      }),
     })
 
     await deliveryFactory.makePrismaDelivery({
       packageId: new UniqueId(packNearby.id),
       packagePickedUpAt: new Date(),
-      deliveryPersonId: new UniqueId(deliveryPerson.id)
+      deliveryPersonId: new UniqueId(deliveryPerson.id),
     })
 
     await deliveryFactory.makePrismaDelivery({
@@ -86,7 +86,7 @@ describe("Fetch nearby deliveries (E2E)", () => {
       packagePickedUpAt: new Date(),
       deliveryPersonId: new UniqueId(deliveryPerson.id),
     })
-    
+
     await deliveryFactory.makePrismaDelivery({
       packageId: new UniqueId(packNearbyTwo.id),
       packagePickedUpAt: new Date(),
@@ -98,7 +98,7 @@ describe("Fetch nearby deliveries (E2E)", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         user_latitude: "-23.5416314",
-        user_longitude: "-46.6823488"
+        user_longitude: "-46.6823488",
       })
 
     expect(response.statusCode).toBe(200)

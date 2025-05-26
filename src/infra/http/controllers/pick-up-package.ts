@@ -6,15 +6,14 @@ import {
   NotFoundException,
   Param,
   Patch,
-  Post,
 } from "@nestjs/common"
 import { z } from "zod"
 
 import { PickUpPackageUseCase } from "@/domain/delivery/application/use-cases/pick-up-package"
-
-import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 import { CurrentUser } from "@/infra/auth/current-user"
 import { UserPayload } from "@/infra/auth/jwt.strategy"
+
+import { ZodValidationPipe } from "../pipes/zod-validate.pipe"
 
 const pickUpPackageParamsSchema = z.object({
   id: z.string().uuid(),
@@ -31,15 +30,15 @@ export class PickUpPackageController {
   @Patch()
   @HttpCode(204)
   async handle(
-    @CurrentUser() user : UserPayload,
-    @Param(paramsValidationPipe) { id }: PickUpPackageParams
+    @CurrentUser() user: UserPayload,
+    @Param(paramsValidationPipe) { id }: PickUpPackageParams,
   ) {
-
-    if(user.role === "ADMIN") throw new ForbiddenException('Admin are not allowed to pick up packages!')
+    if (user.role === "ADMIN")
+      throw new ForbiddenException("Admin are not allowed to pick up packages!")
 
     const [error] = await this.pickUpPackage.execute({
       deliveryId: id,
-      deliveryPersonId: user.sub
+      deliveryPersonId: user.sub,
     })
 
     if (error) {

@@ -1,8 +1,9 @@
+import { Injectable } from "@nestjs/common"
+
 import { bad, nice } from "@/core/error"
 import { UniqueId } from "@/domain/delivery/enterprise/entities/value-objects/unique-id"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
-import { Injectable } from "@nestjs/common"
 
 export interface PickUpPackageUseCaseRequest {
   deliveryId: string

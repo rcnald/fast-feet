@@ -6,13 +6,13 @@ import { PackageRepository } from "@/domain/delivery/application/repositories/pa
 import { RecipientRepository } from "@/domain/delivery/application/repositories/recipient-repository"
 import { UserRepository } from "@/domain/delivery/application/repositories/user-repository"
 
+import { GeolocationModule } from "../geolocation/geolocation.module"
 import { PrismaService } from "./prisma/prisma.service"
 import { PrismaDeliveryPersonRepository } from "./prisma/repositories/prisma-delivery-person-repository"
 import { PrismaDeliveryRepository } from "./prisma/repositories/prisma-delivery-repository"
 import { PrismaPackageRepository } from "./prisma/repositories/prisma-package-repository"
 import { PrismaRecipientRepository } from "./prisma/repositories/prisma-recipient-repository"
 import { PrismaUserRepository } from "./prisma/repositories/prisma-user-repository"
-import { GeolocationModule } from "../geolocation/geolocation.module"
 
 @Module({
   imports: [GeolocationModule],
