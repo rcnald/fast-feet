@@ -11,7 +11,7 @@ export abstract class DeliveryRepository {
       longitude: number
     },
     deliveryPersonId: string,
-  ): Promise<Delivery[]>
+  ): Promise<Delivery[] | null>
 
   abstract findManyByRecipientId(recipientId: string): Promise<Delivery[]>
 }

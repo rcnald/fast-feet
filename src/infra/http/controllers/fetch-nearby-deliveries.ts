@@ -1,4 +1,11 @@
-import { Body, Controller, Get, HttpCode } from "@nestjs/common"
+import {
+  BadGatewayException,
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+} from "@nestjs/common"
 import { z } from "zod"
 
 import { FetchNearbyDeliveriesUseCase } from "@/domain/delivery/application/use-cases/fetch-nearby-deliveries"
@@ -30,11 +37,19 @@ export class FetchNearbyDeliveriesController {
   ) {
     const { user_latitude, user_longitude } = body
 
-    const [_, result] = await this.fetchNearbyDeliveries.execute({
+    const [error, result] = await this.fetchNearbyDeliveries.execute({
       deliveryPersonId: user.sub,
       deliveryPersonLatitude: user_latitude,
       deliveryPersonLongitude: user_longitude,
     })
+
+    if (error) {
+      if (error.code === "UNABLE_TO_GET_NEARBY_DELIVERIES") {
+        throw new BadGatewayException("Extern API has failed!")
+      }
+
+      throw new BadRequestException()
+    }
 
     return { deliveries: result.deliveries }
   }

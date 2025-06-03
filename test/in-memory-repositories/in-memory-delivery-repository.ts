@@ -71,6 +71,9 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
           const coordinate = await this.geocoder.geocode(
             new Address(pack.deliveryAddress).toValue(),
           )
+
+          if (!coordinate) return null
+
           return {
             deliveryId: delivery.id.toString(),
             coordinate,

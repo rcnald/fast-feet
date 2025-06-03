@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common"
 
-import { nice } from "@/core/error"
+import { bad, nice } from "@/core/error"
 
 import { DeliveryRepository } from "../repositories/delivery-repository"
 
@@ -27,6 +27,8 @@ export class FetchNearbyDeliveriesUseCase {
         },
         deliveryPersonId,
       )
+
+    if (!deliveries) return bad({ code: "UNABLE_TO_GET_NEARBY_DELIVERIES" })
 
     return nice({ deliveries })
   }
